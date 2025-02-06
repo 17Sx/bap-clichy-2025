@@ -1,0 +1,35 @@
+nav {
+  display: flex;
+  background-color: #558c6e;
+  justify-content: space-between;
+  height: 8vh;
+  width: 100%;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  width: 718px;
+  height: 8vh;
+}
+
+.logo h1 {
+  color: #d9d9d9;
+  padding-left: 2vw;
+}
+
+.nav-container-item {
+  display: flex;
+  width: 718px;
+  height: 8vh;
+  align-items: center;
+  justify-content: end;
+}
+
+.nav-container-item li {
+  margin-right: 8vh;
+}
+
+.nav-container-item li a {
+  text-transform: uppercase;
+  color: #d9d9d9;
+}

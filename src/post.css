@@ -1,0 +1,70 @@
+a {
+  cursor: default;
+}
+
+.post-container h1 {
+  color: #dadada;
+  margin: 5vh 0;
+}
+
+.post-photo,
+.post {
+  width: 60vw;
+  background-color: #62484c;
+  border-radius: 40px;
+  outline: solid #62484c 10px;
+  outline-offset: -10px;
+  margin: 1vh 0;
+  position: relative;
+}
+
+.post {
+  height: fit-content;
+  padding: 1vw;
+  padding: 5vh 0vh;
+}
+
+.post h1,
+.post p,
+.post-photo h1,
+.post-photo p,
+.post hr {
+  color: #dadada;
+  margin: 2vh 3vh;
+}
+
+.post-photo img {
+  object-fit: fill;
+  width: 60vw;
+  height: 60vh;
+  border-radius: 40px;
+}
+
+.post-photo .post-photo-slider {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 0;
+  width: 95.2%;
+  padding: 0;
+  text-align: left;
+  border-radius: 0 0 40px 40px;
+  transition: all 0.5s ease-in;
+}
+
+.post-photo:hover .post-photo-slider {
+  height: fit-content;
+  padding: 3vh 0;
+}
+
+i {
+  position: absolute;
+  left: 90%;
+  top: 13px;
+  color: red;
+}
+.fa-pen {
+  transform: translate(30px, 0);
+  color: blue;
+}
