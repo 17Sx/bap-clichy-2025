@@ -1,73 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./src/feed.css">
-    <link rel="stylesheet" href="./src/post.css">
-
-    <title>Publication</title>
+    <title>Whatassap</title>
 </head>
 <body>
 
 <?php
-require_once('header.php');
-?>
-<div class="post-container">
-<?php
-echo '<h1>Articles publiés</h1>';
 session_start();
-require_once('bdd.php');
-if (isset($_SESSION['user_connected'])){
-    $getuser = $connexion->prepare(query: 'SELECT id, email, user, administrateur FROM users WHERE id = :id' );
-    $getuser->execute(params:[
-        'id'=> htmlspecialchars(string: $_SESSION['user_connected'])
-    ]);
-    $getuser = $getuser->fetch();
+
+if (!isset($_SESSION['csrf_token']) || empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
-$getArticle = $connexion->prepare('SELECT title, content, img, slug FROM Article');
-$getArticle->execute();
 
-
-if($getArticle->rowCount() > 0){
-foreach ($getArticle->fetchAll(PDO::FETCH_ASSOC) as $article){
-    $image = $article['img'];
-    $lien = "article.php?s=".$article['slug'];
-    if($image!='none'){
-        echo "<div class='post-photo'>";
-        if($getuser["administrateur"]){
-        echo '<a href="./Supprimer.php?s=' . $article['slug'] . '"><i class=\'fa-solid fa-trash\'></i></a>';
-        echo '<a href="./modifier.php?s=' . $article['slug'] . '"><i class=\'fa-solid fa-pen\'></i></a>';
-        }
-        echo "<a href='$lien'>";
-        echo "<img src='$image' alt='Image du post'>";
-        echo "<div class='post-photo-slider'>";
-        echo '<h1>'.$article['title'].'</h1>';
-        echo '<p>'.$article['content'].'</p>';
-        echo "</div>";
-        echo "</a>";
-        echo "</div>";
-    }
-    else{
-        echo "<div class='post'>";
-        if($getuser["administrateur"]){
-        echo '<a href="./Supprimer.php?s=' . $article['slug'] . '"><i class=\'fa-solid fa-trash\'></i></a>';
-        echo '<a href="./modifier.php?s=' . $article['slug'] . '"><i class=\'fa-solid fa-pen\'></i></a>';
-        }
-        echo "<a href='$lien'>";
-        echo '<h1>'.$article['title'].'</h1>';
-        echo '<hr>';
-        echo '<p>'.$article['content'].'</p>';
-        echo "</a>";
-        echo "</div>";
-    }
-
-    
-}}
-else{
-    echo '<h1>Aucun article publié</h1>';
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
 }
+
+$pseudo = $_SESSION['pseudo'];
+$userId = $_SESSION['user_id'];
+$isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
 ?>
+
+<div class="container">
+    <nav class="nav-header">
+        <a href="logout.php" class="logout-btn">Déconnexion</a>
+    </nav>
+
+    <div class="message-form">
+        <h2>Créer un nouveau message</h2>
+        <form action="create.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+            <textarea name="content" placeholder="Écrivez votre message ici, <?php echo htmlspecialchars($pseudo); ?>" required></textarea>
+            <input type="file" name="image" accept="image/*">   
+            <button type="submit">Envoyer le message</button>
+        </form>
+    </div>
+
+    <div class="messages-section">
+        <h2>Messages récents</h2>
+        <div id="messages">
+            <?php
+            $dsn = 'mysql:host=localhost;dbname=renduphpcrud;charset=utf8';
+            $username = 'root';
+            $password = '';
+
+            try {
+                $pdo = new PDO($dsn, $username, $password);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $stmt = $pdo->query("
+                SELECT user.pseudo, message.content, message.creea, message.id AS message_id, 
+                    message.user_id, message.image_path
+                FROM message
+                JOIN user ON message.user_id = user.id
+                ORDER BY message.creea DESC
+                LIMIT 10
+            ");
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $isOwnMessage = $row['user_id'] == $userId;
+                $messageClass = $isOwnMessage ? 'own-message' : 'other-message';
+                echo '<div class="message ' . $messageClass . '">';
+                
+                // Afficher l'image seulement si elle existe
+                if (!empty($row['image_path'])) {
+                    echo '<img src="' . htmlspecialchars($row['image_path']) . '" alt="image" class="message-image">';
+                }
+                
+                echo '<p class="message-meta">' . htmlspecialchars($row['pseudo']) . ' - ' . htmlspecialchars($row['creea']) . '</p>';
+                echo '<p class="message-content">' . htmlspecialchars($row['content']) . '</p>';
+            
+                if ($isAdmin) {
+                    echo '<div class="admin-controls">';
+                    echo '<a href="edit.php?id=' . $row['message_id'] . '" class="edit-link">Modifier</a>';
+                    echo '<a href="delete.php?id=' . $row['message_id'] . '" class="delete-link">Supprimer</a>';
+                    echo '</div>';
+                }
+                echo '</div>';
+            }
+            
+            } catch (PDOException $e) {
+                echo 'Erreur : ' . $e->getMessage();
+            }
+            ?>
+        </div>
+    </div>
 </div>
 
 </body>
