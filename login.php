@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
+    <title>Clichy | Connexion</title>
 </head>
 <body>
 
 <div>
     <div class="login-container">
-        <h1>CONNEXION</h1>
+        <h1>Connexion</h1>
         <form action="login.php" method="POST">
             <label for="pseudo">Nom d'utilisateur</label>
             <input type="text" name="pseudo" id="pseudo" placeholder="17sx" required>
@@ -20,7 +20,7 @@
             <button type="submit">Se connecter</button>
         </form>
 
-        <a href="register.php">Pas de compte ?</a>
+        <p>Veuillez demmander un accées a un admin pour vous crée un compte</p>
     </div>
 </div>
 
