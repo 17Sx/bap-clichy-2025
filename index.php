@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clichy | AntiGaspi</title>
+    <link rel="stylesheet" href="css/global.css">
 </head>
 <body>
 
@@ -103,6 +104,32 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
         </div>
     </div>
 </div>
+
+
+<footer>
+
+    <div class="footer-left">
+        <img src="public/img/logoblanc.png" alt="">
+        <div class="footer-text">
+            <p>Les restes d'aujourd'hui,</p>
+            <p>les repas de demains</p>
+        </div>
+    </div>
+
+    <div class="footer-contact">
+        <h3>
+            Contact
+        </h3>
+
+        <div class="footer-contact-text">
+            <p>Mairie de Clichy-la-Garenne 80,</p>
+            <p>Boulevard Jean Jaurès </p>
+            <p>92110 Clichy </p>
+            <p>01 47 15 30 00</p>
+        </div>
+    </div>
+
+</footer>
 
 </body>
 </html>
