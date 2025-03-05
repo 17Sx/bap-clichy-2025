@@ -95,3 +95,38 @@ header img{
     background-color: #5A58AB;
     color: #fff;
 }
+
+@media screen and (max-width: 768px) {
+    body {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header img{
+        position: relative;
+        
+    }
+
+    .img-container {
+        display: none;
+    }
+
+    .login-container {
+        width: 80%;
+        height: 70vh;
+    }
+
+    header img {
+        width: 150px;
+    }
+
+    .login-container form input,
+    .password-container {
+        width: 90%;
+        max-width: 20rem;
+    }
+
+    p{
+        font-size: 0.8rem;
+    }
+}
