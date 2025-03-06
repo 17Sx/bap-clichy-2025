@@ -123,3 +123,7 @@ CREATE TABLE plats (
     is_halal BOOLEAN,
     is_sans_gluten BOOLEAN
 );
+
+ALTER TABLE message 
+ADD COLUMN lieu VARCHAR(100) DEFAULT NULL,
+ADD COLUMN date_peremption DATE DEFAULT NULL;

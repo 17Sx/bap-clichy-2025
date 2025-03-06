@@ -64,6 +64,20 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
             </div>
             
             <div class="form-group">
+                <label for="lieu">Lieu de collecte:</label>
+                <select name="lieu" id="lieu" required>
+                    <option value="Lycée de Paris">Lycée de Paris</option>
+                    <option value="Lycée de Boulogne">Lycée de Boulogne</option>
+                    <option value="Primaire de Garches">Primaire de Garches</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="date_peremption">Date de péremption:</label>
+                <input type="date" name="date_peremption" id="date_peremption" required>
+            </div>
+            
+            <div class="form-group">
                 <label for="tags">Tags (sélectionnez plusieurs options avec Ctrl+clic ou Cmd+clic):</label>
                 <select name="tags[]" id="tags" multiple class="form-control">
                     <option value="légumes">Légumes</option>
@@ -106,7 +120,9 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
 
                 $stmt = $pdo->query("
                 SELECT user.pseudo, message.content, message.creea, message.id AS message_id, 
-                message.user_id, message.image_path, message.is_claim
+                message.user_id, message.image_path, message.is_claim, message.titre, 
+                message.ingredients, message.quantite, message.nom_adresse,
+                message.lieu, message.date_peremption
                 FROM message
                 JOIN user ON message.user_id = user.id
                 ORDER BY message.creea DESC
@@ -124,12 +140,38 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
                 }
                 echo '<div class="message ' . $messageClass . '">';
                 
+                // Titre de l'annonce
+                echo '<h3>' . htmlspecialchars($row['titre'] ?? 'Sans titre') . '</h3>';
+                
                 if (!empty($row['image_path'])) {
                     echo '<img src="' . htmlspecialchars($row['image_path']) . '" alt="image" class="message-image">';
                 }
                 
                 echo '<p class="message-meta">' . htmlspecialchars($row['pseudo']) . ' - ' . htmlspecialchars($row['creea']) . '</p>';
                 echo '<p class="message-content">' . htmlspecialchars($row['content']) . '</p>';
+                
+                if (!empty($row['ingredients'])) {
+                    echo '<p><strong>Ingrédients:</strong> ' . nl2br(htmlspecialchars($row['ingredients'])) . '</p>';
+                }
+                
+                if (!empty($row['quantite'])) {
+                    echo '<p><strong>Quantité:</strong> ' . htmlspecialchars($row['quantite']) . '</p>';
+                }
+                
+                if (!empty($row['nom_adresse'])) {
+                    echo '<p><strong>Contact:</strong> ' . htmlspecialchars($row['nom_adresse']) . '</p>';
+                }
+                
+                // Afficher le lieu de collecte
+                if (!empty($row['lieu'])) {
+                    echo '<p><strong>Lieu de collecte:</strong> ' . htmlspecialchars($row['lieu']) . '</p>';
+                }
+                
+                // Afficher la date de péremption
+                if (!empty($row['date_peremption'])) {
+                    echo '<p><strong>Date de péremption:</strong> ' . htmlspecialchars($row['date_peremption']) . '</p>';
+                }
+                
                 if (!$row['is_claim']) {
                     echo '<a href="claim.php?id=' . $row['message_id'] . '" class="claim-link">Réclamer l\'annonce</a>';
                 } else {

@@ -17,6 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $ingredients = isset($_POST['ingredients']) ? $_POST['ingredients'] : null;
         $quantite = isset($_POST['quantite']) ? $_POST['quantite'] : null;
         $nom_adresse = isset($_POST['nom_adresse']) ? $_POST['nom_adresse'] : null;
+        $lieu = isset($_POST['lieu']) ? $_POST['lieu'] : null;
+        $date_peremption = isset($_POST['date_peremption']) ? $_POST['date_peremption'] : null;
         
         // Traitement des tags depuis le select multiple
         $tags_array = [];
@@ -56,8 +58,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         require 'bdd.php';
 
-        $stmt = $connexion->prepare("INSERT INTO message (user_id, content, image_path, titre, ingredients, tags, quantite, nom_adresse) 
-                                    VALUES (:user_id, :content, :image_path, :titre, :ingredients, :tags, :quantite, :nom_adresse)");
+        $stmt = $connexion->prepare("INSERT INTO message (user_id, content, image_path, titre, ingredients, tags, quantite, nom_adresse, lieu, date_peremption) 
+                                    VALUES (:user_id, :content, :image_path, :titre, :ingredients, :tags, :quantite, :nom_adresse, :lieu, :date_peremption)");
 
         $stmt->bindParam(':user_id', $_SESSION['user_id']);
         $stmt->bindParam(':content', $content);
@@ -67,6 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':tags', $tags_json);
         $stmt->bindParam(':quantite', $quantite);
         $stmt->bindParam(':nom_adresse', $nom_adresse);
+        $stmt->bindParam(':lieu', $lieu);
+        $stmt->bindParam(':date_peremption', $date_peremption);
 
         if ($stmt->execute()) {
             header("Location: index.php");
@@ -77,4 +81,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-

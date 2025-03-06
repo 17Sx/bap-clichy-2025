@@ -69,6 +69,31 @@
             border-radius: 12px;
             font-size: 0.8em;
         }
+        
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-control {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-control select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .filter-control label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -100,8 +125,14 @@ try {
         'vegan', 'sans gluten'
     ];
 
-    // Récupérer le tag sélectionné
+    // Récupérer les filtres sélectionnés
     $selectedTag = isset($_GET['tag']) ? $_GET['tag'] : '';
+    $selectedLieu = isset($_GET['lieu']) ? $_GET['lieu'] : '';
+    $sortDate = isset($_GET['sort_date']) ? $_GET['sort_date'] : '';
+    
+    // Récupérer tous les lieux disponibles
+    $lieuStmt = $pdo->query("SELECT DISTINCT lieu FROM message WHERE lieu IS NOT NULL ORDER BY lieu");
+    $lieux = $lieuStmt->fetchAll(PDO::FETCH_COLUMN);
     
 ?>
 
@@ -112,13 +143,44 @@ try {
     </nav>
 
     <div class="filter-section">
-        <h2>Filtrer par tags</h2>
+        <h2>Filtrer les annonces</h2>
+        
+        <!-- Filtres supplémentaires: lieu et date de péremption -->
+        <div class="filter-controls">
+            <div class="filter-control">
+                <label for="lieu">Filtrer par lieu:</label>
+                <select id="lieu" name="lieu" onchange="applyFilters()">
+                    <option value="">Tous les lieux</option>
+                    <?php foreach ($lieux as $lieu): ?>
+                        <option value="<?php echo htmlspecialchars($lieu); ?>" 
+                                <?php echo $selectedLieu === $lieu ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($lieu); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            
+            <div class="filter-control">
+                <label for="sort_date">Trier par date de péremption:</label>
+                <select id="sort_date" name="sort_date" onchange="applyFilters()">
+                    <option value="">Sans tri</option>
+                    <option value="asc" <?php echo $sortDate === 'asc' ? 'selected' : ''; ?>>
+                        Du plus récent au plus ancien
+                    </option>
+                    <option value="desc" <?php echo $sortDate === 'desc' ? 'selected' : ''; ?>>
+                        Du plus ancien au plus récent
+                    </option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Filtres par tags -->
         <div class="filter-form">
-            <a href="annonces.php" class="tag-button <?php echo empty($selectedTag) ? 'active' : ''; ?>">
+            <a href="javascript:void(0)" onclick="selectTag('')" class="tag-button <?php echo empty($selectedTag) ? 'active' : ''; ?>">
                 Tous
             </a>
             <?php foreach ($allTags as $tag): ?>
-            <a href="annonces.php?tag=<?php echo urlencode($tag); ?>" 
+            <a href="javascript:void(0)" onclick="selectTag('<?php echo $tag; ?>')" 
                class="tag-button <?php echo $selectedTag === $tag ? 'active' : ''; ?>">
                 <?php echo htmlspecialchars($tag); ?>
             </a>
@@ -127,25 +189,53 @@ try {
     </div>
 
     <div class="messages-section">
-        <h2><?php echo empty($selectedTag) ? 'Toutes les annonces' : 'Annonces avec le tag "' . htmlspecialchars($selectedTag) . '"'; ?></h2>
+        <h2>
+            <?php 
+            $title = 'Annonces';
+            if (!empty($selectedTag)) {
+                $title .= ' avec le tag "' . htmlspecialchars($selectedTag) . '"';
+            }
+            if (!empty($selectedLieu)) {
+                $title .= ' à ' . htmlspecialchars($selectedLieu);
+            }
+            echo $title;
+            ?>
+        </h2>
         
         <div class="message-grid">
             <?php
-            // Construire la requête SQL en fonction du tag sélectionné
+            // Construire la requête SQL en fonction des filtres sélectionnés
             $sql = "SELECT user.pseudo, message.*, message.id AS message_id, message.user_id
                     FROM message
-                    JOIN user ON message.user_id = user.id";
+                    JOIN user ON message.user_id = user.id
+                    WHERE 1=1";
+            
+            $params = [];
             
             if (!empty($selectedTag)) {
-                $sql .= " WHERE JSON_CONTAINS(tags, '\"" . $selectedTag . "\"', '$')";
+                $sql .= " AND JSON_CONTAINS(tags, :tag, '$')";
+                $params[':tag'] = json_encode($selectedTag);
             }
             
-            $sql .= " ORDER BY message.creea DESC";
+            if (!empty($selectedLieu)) {
+                $sql .= " AND lieu = :lieu";
+                $params[':lieu'] = $selectedLieu;
+            }
+            
+            // Ordre de tri
+            if (!empty($sortDate)) {
+                $sql .= " ORDER BY date_peremption " . ($sortDate === 'asc' ? 'ASC' : 'DESC');
+            } else {
+                $sql .= " ORDER BY message.creea DESC";
+            }
             
             $stmt = $pdo->prepare($sql);
-            $stmt->execute();
+            $stmt->execute($params);
+            
+            $messageCount = 0;
             
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $messageCount++;
                 $isOwnMessage = $row['user_id'] == $userId;
                 $isClaimed = $row['is_claim'] == 1;
                 $messageClass = $isClaimed ? 'claimed' : '';
@@ -182,6 +272,16 @@ try {
                     echo '<p><strong>Contact:</strong> ' . htmlspecialchars($row['nom_adresse']) . '</p>';
                 }
                 
+                // Afficher le lieu de collecte
+                if (!empty($row['lieu'])) {
+                    echo '<p><strong>Lieu de collecte:</strong> ' . htmlspecialchars($row['lieu']) . '</p>';
+                }
+                
+                // Afficher la date de péremption
+                if (!empty($row['date_peremption'])) {
+                    echo '<p><strong>Date de péremption:</strong> ' . htmlspecialchars($row['date_peremption']) . '</p>';
+                }
+                
                 // Afficher les tags
                 if (!empty($tags)) {
                     echo '<div class="tag-list">';
@@ -209,10 +309,69 @@ try {
                 echo '</div>';
             }
             
+            if ($messageCount === 0) {
+                echo '<p>Aucune annonce ne correspond aux critères sélectionnés.</p>';
+            }
+            
             ?>
         </div>
     </div>
 </div>
+
+<script>
+    function applyFilters() {
+        const tag = '<?php echo $selectedTag; ?>';
+        const lieu = document.getElementById('lieu').value;
+        const sortDate = document.getElementById('sort_date').value;
+        
+        let url = 'annonces.php?';
+        
+        if (tag) {
+            url += 'tag=' + encodeURIComponent(tag) + '&';
+        }
+        
+        if (lieu) {
+            url += 'lieu=' + encodeURIComponent(lieu) + '&';
+        }
+        
+        if (sortDate) {
+            url += 'sort_date=' + encodeURIComponent(sortDate);
+        }
+        
+        // Supprimer le dernier & si nécessaire
+        if (url.endsWith('&')) {
+            url = url.slice(0, -1);
+        }
+        
+        window.location.href = url;
+    }
+    
+    function selectTag(tag) {
+        const lieu = document.getElementById('lieu').value;
+        const sortDate = document.getElementById('sort_date').value;
+        
+        let url = 'annonces.php?';
+        
+        if (tag) {
+            url += 'tag=' + encodeURIComponent(tag) + '&';
+        }
+        
+        if (lieu) {
+            url += 'lieu=' + encodeURIComponent(lieu) + '&';
+        }
+        
+        if (sortDate) {
+            url += 'sort_date=' + encodeURIComponent(sortDate);
+        }
+        
+        // Supprimer le dernier & si nécessaire
+        if (url.endsWith('&')) {
+            url = url.slice(0, -1);
+        }
+        
+        window.location.href = url;
+    }
+</script>
 
 <?php
 } catch (PDOException $e) {
