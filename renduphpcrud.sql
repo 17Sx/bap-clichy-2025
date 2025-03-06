@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : jeu. 06 mars 2025 à 08:18
+-- Généré le : jeu. 06 mars 2025 à 08:28
 -- Version du serveur : 8.0.30
 -- Version de PHP : 8.3.14
 
@@ -46,9 +46,7 @@ CREATE TABLE `message` (
 --
 
 INSERT INTO `message` (`id`, `content`, `user_id`, `creea`, `image_path`, `is_claim`, `titre`, `ingredients`, `tags`, `quantite`, `nom_adresse`) VALUES
-(2, 'Cava ?\r\n', 1, '2024-10-29 17:22:21', NULL, 0, 'Titre du message #2', 'Pas d\'ingrédients spécifiés', '[\"général\"]', 'Non spécifié', 'Adresse non spécifiée'),
-(17, 'Salut la famille !', 2, '2024-10-30 10:32:45', NULL, 0, 'Titre du message #17', 'Pas d\'ingrédients spécifiés', '[\"général\"]', 'Non spécifié', 'Adresse non spécifiée'),
-(39, 'erdtfghjk', 2, '2025-03-06 09:17:48', NULL, 0, 'é\"\'(tyujk', 'rtfyghjkl', '[\"viande\", \"poisson\", \"produits laitiers\", \"bio\", \"gratuit\", \"à petit prix\", \"fait maison\", \"végétarien\"]', 'hgjklm;:!', 'drfghjklmù');
+(40, 'Pates carbo a la creme', 2, '2025-03-06 09:25:54', NULL, 0, 'Pates carbo', 'pates, lardons, creme', '[\"viande\", \"produits laitiers\", \"fait maison\"]', '56 portions', '2 rue des noisetier, Clichy, 92000');
 
 -- --------------------------------------------------------
 
@@ -100,7 +98,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT pour la table `user`
