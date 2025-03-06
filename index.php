@@ -26,9 +26,10 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
 ?>
 
 <div class="container">
-    <nav class="nav-header">
-        <a href="logout.php" class="logout-btn">Déconnexion</a>
-    </nav>
+   <nav class="nav-header">
+    <a href="annonces.php" class="filter-btn">Filtrer par tags</a>
+    <a href="logout.php" class="logout-btn">Déconnexion</a>
+</nav>
 
     
     <?php if ($isAdmin): ?>
