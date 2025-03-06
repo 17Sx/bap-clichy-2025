@@ -92,7 +92,7 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
 <?php endif; ?>
 
     <div class="messages-section">
-        <h2>Anonces les plus récentes</h2>
+        <h2>Annonces les plus récentes</h2>
         <div id="messages">
             <?php
             $dsn = 'mysql:host=localhost;dbname=renduphpcrud;charset=utf8';
@@ -104,8 +104,18 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                 $stmt = $pdo->query("
-                SELECT user.pseudo, message.content, message.creea, message.id AS message_id, 
-                message.user_id, message.image_path, message.is_claim
+                SELECT user.pseudo, 
+                       message.content, 
+                       message.creea, 
+                       message.id AS message_id, 
+                       message.user_id, 
+                       message.image_path, 
+                       message.is_claim,
+                       message.titre,
+                       message.ingredients,
+                       message.tags,
+                       message.quantite,
+                       message.nom_adresse
                 FROM message
                 JOIN user ON message.user_id = user.id
                 ORDER BY message.creea DESC
@@ -121,14 +131,52 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
                 if ($isClaim) {
                     $messageClass .= ' claimed';
                 }
+                
                 echo '<div class="message ' . $messageClass . '">';
+                
+                if (!empty($row['titre'])) {
+                    echo '<h3>' . htmlspecialchars($row['titre']) . '</h3>';
+                }
                 
                 if (!empty($row['image_path'])) {
                     echo '<img src="' . htmlspecialchars($row['image_path']) . '" alt="image" class="message-image">';
                 }
                 
-                echo '<p class="message-meta">' . htmlspecialchars($row['pseudo']) . ' - ' . htmlspecialchars($row['creea']) . '</p>';
                 echo '<p class="message-content">' . htmlspecialchars($row['content']) . '</p>';
+                
+                echo '<div class="message-details">';
+                
+                if (!empty($row['ingredients'])) {
+                    echo '<div class="detail-item"><strong>Ingrédients:</strong><br>';
+                    echo nl2br(htmlspecialchars($row['ingredients']));
+                    echo '</div>';
+                }
+                
+                if (!empty($row['quantite'])) {
+                    echo '<div class="detail-item"><strong>Quantité:</strong> ' . htmlspecialchars($row['quantite']) . '</div>';
+                }
+                
+                if (!empty($row['nom_adresse'])) {
+                    echo '<div class="detail-item"><strong>Contact:</strong> ' . htmlspecialchars($row['nom_adresse']) . '</div>';
+                }
+                
+                if (!empty($row['tags'])) {
+                    $tagsArray = json_decode($row['tags'], true);
+                    if (is_array($tagsArray) && !empty($tagsArray)) {
+                        echo '<div class="detail-item"><strong>Tags:</strong>';
+                        echo '<div class="message-tags">';
+                        foreach ($tagsArray as $tag) {
+                            echo '<span class="tag">' . htmlspecialchars($tag) . '</span>';
+                        }
+                        echo '</div></div>';
+                    }
+                }
+                
+                echo '<p class="message-meta"> crée par ' . htmlspecialchars($row['pseudo']) . ' le ' . htmlspecialchars($row['creea']) . '</p>';
+
+                
+                echo '</div>'; 
+                
                 if (!$row['is_claim']) {
                     echo '<a href="claim.php?id=' . $row['message_id'] . '" class="claim-link">Réclamer l\'annonce</a>';
                 } else {
@@ -142,7 +190,7 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
                     echo '<a href="delete.php?id=' . $row['message_id'] . '" class="delete-link">Supprimer</a>';
                     echo '</div>';
                 }
-                echo '</div>';
+                echo '</div>'; // Fin message
             }
             
             } catch (PDOException $e) {
