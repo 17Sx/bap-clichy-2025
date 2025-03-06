@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : jeu. 06 fév. 2025 à 09:32
+-- Généré le : jeu. 06 mars 2025 à 08:18
 -- Version du serveur : 8.0.30
 -- Version de PHP : 8.3.14
 
@@ -32,25 +32,23 @@ CREATE TABLE `message` (
   `content` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `user_id` int NOT NULL DEFAULT '1',
   `creea` datetime DEFAULT CURRENT_TIMESTAMP,
-  `image_path` varchar(255) DEFAULT NULL
+  `image_path` varchar(255) DEFAULT NULL,
+  `is_claim` tinyint(1) DEFAULT '0',
+  `titre` varchar(255) DEFAULT NULL,
+  `ingredients` text,
+  `tags` json DEFAULT NULL,
+  `quantite` varchar(100) DEFAULT NULL,
+  `nom_adresse` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `message`
 --
 
-INSERT INTO `message` (`id`, `content`, `user_id`, `creea`, `image_path`) VALUES
-(1, 'Coucou !', 1, '2024-10-29 17:15:45', NULL),
-(2, 'Cava ?\r\n', 1, '2024-10-29 17:22:21', NULL),
-(17, 'Salut la famille !', 2, '2024-10-30 10:32:45', NULL),
-(18, 'Salut toto\r\n', 3, '2024-10-30 10:33:01', NULL),
-(19, 'cv sx ??', 2, '2024-10-30 10:33:15', NULL),
-(26, 'zeze', 3, '2024-10-31 09:20:19', NULL),
-(27, 'aaa', 6, '2025-02-06 09:47:40', NULL),
-(28, 'azertghy', 6, '2025-02-06 09:49:20', NULL),
-(29, 'aaa', 6, '2025-02-06 09:51:50', NULL),
-(30, 'sdcfvgbhn', 6, '2025-02-06 09:54:38', NULL),
-(31, 'aze', 6, '2025-02-06 09:57:22', 'uploads/67a47972862ec.png');
+INSERT INTO `message` (`id`, `content`, `user_id`, `creea`, `image_path`, `is_claim`, `titre`, `ingredients`, `tags`, `quantite`, `nom_adresse`) VALUES
+(2, 'Cava ?\r\n', 1, '2024-10-29 17:22:21', NULL, 0, 'Titre du message #2', 'Pas d\'ingrédients spécifiés', '[\"général\"]', 'Non spécifié', 'Adresse non spécifiée'),
+(17, 'Salut la famille !', 2, '2024-10-30 10:32:45', NULL, 0, 'Titre du message #17', 'Pas d\'ingrédients spécifiés', '[\"général\"]', 'Non spécifié', 'Adresse non spécifiée'),
+(39, 'erdtfghjk', 2, '2025-03-06 09:17:48', NULL, 0, 'é\"\'(tyujk', 'rtfyghjkl', '[\"viande\", \"poisson\", \"produits laitiers\", \"bio\", \"gratuit\", \"à petit prix\", \"fait maison\", \"végétarien\"]', 'hgjklm;:!', 'drfghjklmù');
 
 -- --------------------------------------------------------
 
@@ -102,7 +100,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT pour la table `user`
