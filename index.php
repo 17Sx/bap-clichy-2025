@@ -32,16 +32,64 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
 
     
     <?php if ($isAdmin): ?>
-        <div class="message-form">
-            <h2>Créer une nouvelle anonce anti gaspi!</h2>
-            <form action="create.php" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                <textarea name="content" placeholder="Écrivez votre anonce ici, <?php echo htmlspecialchars($pseudo); ?> (Poids, Taille...)" required></textarea>
-                <input type="file" name="image" accept="image/*">   
-                <button type="submit">Envoyer l'anonce</button>
-            </form>
-        </div>
-    <?php endif; ?>
+    <div class="message-form">
+        <h2>Créer une nouvelle annonce anti gaspi!</h2>
+        <form action="create.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+            
+            <div class="form-group">
+                <label for="titre">Titre de l'annonce:</label>
+                <input type="text" name="titre" id="titre" placeholder="Titre de votre annonce" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="content">Description:</label>
+                <textarea name="content" id="content" placeholder="Écrivez votre annonce ici, <?php echo htmlspecialchars($pseudo); ?>" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="ingredients">Ingrédients:</label>
+                <textarea name="ingredients" id="ingredients" placeholder="Listez les ingrédients, un par ligne"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="quantite">Quantité:</label>
+                <input type="text" name="quantite" id="quantite" placeholder="Ex: 500g, 2 portions, etc.">
+            </div>
+            
+            <div class="form-group">
+                <label for="nom_adresse">Nom et adresse:</label>
+                <input type="text" name="nom_adresse" id="nom_adresse" placeholder="Votre nom et adresse">
+            </div>
+            
+            <div class="form-group">
+                <label for="tags">Tags (sélectionnez plusieurs options avec Ctrl+clic ou Cmd+clic):</label>
+                <select name="tags[]" id="tags" multiple class="form-control">
+                    <option value="légumes">Légumes</option>
+                    <option value="fruits">Fruits</option>
+                    <option value="viande">Viande</option>
+                    <option value="poisson">Poisson</option>
+                    <option value="produits laitiers">Produits laitiers</option>
+                    <option value="bio">Bio</option>
+                    <option value="gratuit">Gratuit</option>
+                    <option value="à petit prix">À petit prix</option>
+                    <option value="fait maison">Fait maison</option>
+                    <option value="végétarien">Végétarien</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="sans gluten">Sans gluten</option>
+                </select>
+            </div>
+
+            
+            <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="file" name="image" id="image" accept="image/*">
+            </div>
+            
+            <button type="submit">Envoyer l'annonce</button>
+        </form>
+    </div>
+<?php endif; ?>
 
     <div class="messages-section">
         <h2>Anonces les plus récentes</h2>
