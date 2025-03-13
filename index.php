@@ -26,9 +26,10 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
 ?>
 
 <div class="container">
-    <nav class="nav-header">
-        <a href="logout.php" class="logout-btn">Déconnexion</a>
-    </nav>
+   <nav class="nav-header">
+    <a href="annonces.php" class="filter-btn">Filtrer par tags</a>
+    <a href="logout.php" class="logout-btn">Déconnexion</a>
+</nav>
 
     
     <?php if ($isAdmin): ?>
@@ -60,6 +61,20 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
             <div class="form-group">
                 <label for="nom_adresse">Nom et adresse:</label>
                 <input type="text" name="nom_adresse" id="nom_adresse" placeholder="Votre nom et adresse">
+            </div>
+            
+            <div class="form-group">
+                <label for="lieu">Lieu de collecte:</label>
+                <select name="lieu" id="lieu" required>
+                    <option value="Lycée de Paris">Lycée de Paris</option>
+                    <option value="Lycée de Boulogne">Lycée de Boulogne</option>
+                    <option value="Primaire de Garches">Primaire de Garches</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="date_peremption">Date de péremption:</label>
+                <input type="date" name="date_peremption" id="date_peremption" required>
             </div>
             
             <div class="form-group">
@@ -116,6 +131,10 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
                        message.tags,
                        message.quantite,
                        message.nom_adresse
+                SELECT user.pseudo, message.content, message.creea, message.id AS message_id, 
+                message.user_id, message.image_path, message.is_claim, message.titre, 
+                message.ingredients, message.quantite, message.nom_adresse,
+                message.lieu, message.date_peremption
                 FROM message
                 JOIN user ON message.user_id = user.id
                 ORDER BY message.creea DESC
