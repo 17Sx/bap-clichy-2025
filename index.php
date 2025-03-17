@@ -23,13 +23,17 @@ if (!isset($_SESSION['user_id'])) {
 $pseudo = $_SESSION['pseudo'];
 $userId = $_SESSION['user_id'];
 $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
+$isSuperAdmin = isset($_SESSION['is_superadmin']) && $_SESSION['is_superadmin'] == 1;
 ?>
 
 <div class="container">
    <nav class="nav-header">
     <a href="annonces.php" class="filter-btn">Filtrer par tags</a>
     <a href="logout.php" class="logout-btn">Déconnexion</a>
-</nav>
+    <?php if ($isSuperAdmin): ?>
+        <a href="superadmin.php" class="admin-btn">Gestion des comptes</a> 
+    <?php endif; ?>
+    </nav>
 
     
     <?php if ($isAdmin): ?>

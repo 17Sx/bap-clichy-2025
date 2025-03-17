@@ -70,7 +70,7 @@
         if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
             $pseudo = $_POST['pseudo'];
             $password = $_POST['password'];
-            $stmt = $connexion->prepare("SELECT id, pseudo, password, admin FROM user WHERE pseudo = :pseudo");
+            $stmt = $connexion->prepare("SELECT id, pseudo, password, admin, is_superadmin FROM user WHERE pseudo = :pseudo");
             $stmt->bindParam(':pseudo', $pseudo);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -78,6 +78,7 @@
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['pseudo'] = $user['pseudo'];
                 $_SESSION['admin'] = $user['admin'];
+                $_SESSION['is_superadmin'] = $user['is_superadmin'];
                 header("Location: index.php");
                 exit();
             } else {
