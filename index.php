@@ -32,6 +32,7 @@ $isSuperAdmin = isset($_SESSION['is_superadmin']) && $_SESSION['is_superadmin'] 
     <a href="logout.php" class="logout-btn">Déconnexion</a>
     <?php if ($isSuperAdmin): ?>
         <a href="superadmin.php" class="admin-btn">Gestion des comptes</a> 
+        <a href="superadminanonce.php" class="admin-btn">Gestion des annonces</a>
     <?php endif; ?>
     </nav>
 
