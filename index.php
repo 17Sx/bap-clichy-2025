@@ -201,7 +201,7 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
                 }
 
 
-                if ($isAdmin) {
+                if ($row['user_id'] == $userId) {
                     echo '<div class="admin-controls">';
                     echo '<a href="edit.php?id=' . $row['message_id'] . '" class="edit-link">Modifier</a>';
                     echo '<a href="delete.php?id=' . $row['message_id'] . '" class="delete-link">Supprimer</a>';
