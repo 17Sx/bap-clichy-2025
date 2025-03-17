@@ -130,11 +130,9 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
                        message.ingredients,
                        message.tags,
                        message.quantite,
-                       message.nom_adresse
-                SELECT user.pseudo, message.content, message.creea, message.id AS message_id, 
-                message.user_id, message.image_path, message.is_claim, message.titre, 
-                message.ingredients, message.quantite, message.nom_adresse,
-                message.lieu, message.date_peremption
+                       message.nom_adresse,
+                       message.lieu,
+                       message.date_peremption
                 FROM message
                 JOIN user ON message.user_id = user.id
                 ORDER BY message.creea DESC
@@ -209,7 +207,7 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
                     echo '<a href="delete.php?id=' . $row['message_id'] . '" class="delete-link">Supprimer</a>';
                     echo '</div>';
                 }
-                echo '</div>'; // Fin message
+                echo '</div>'; 
             }
             
             } catch (PDOException $e) {
