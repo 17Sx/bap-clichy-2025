@@ -33,6 +33,7 @@ $isSuperAdmin = isset($_SESSION['is_superadmin']) && $_SESSION['is_superadmin'] 
     <?php if ($isSuperAdmin): ?>
         <a href="superadmin.php" class="admin-btn">Gestion des comptes</a> 
         <a href="superadminanonce.php" class="admin-btn">Gestion des annonces</a>
+        <a href="resetclaim.php" class="admin-btn">Reset des claims</a>
     <?php endif; ?>
     </nav>
 

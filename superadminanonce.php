@@ -373,7 +373,7 @@ $availableTags = [
     <title>Clichy | Gestion des Annonces</title>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all .min.css">
     <style>
         .message-card {
             margin-bottom: 20px;
@@ -691,7 +691,9 @@ $availableTags = [
                                                     <div class="mt-2">
                                                         <p>Image actuelle :</p>
                                                         <img src="<?php echo htmlspecialchars($msg['image_path']); ?>" alt="Image actuelle" class="edit-preview-image">
-                                                        
+                                                        <button type="button" onclick="deleteImage(<?php echo $msg['id']; ?>)" class="btn btn-sm btn-danger">
+                                                            <i class="fas fa-trash"></i> Supprimer l'image
+                                                        </button>
                                                     </div>
                                                 <?php endif; ?>
                                                 
@@ -791,7 +793,30 @@ $availableTags = [
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
     <script>
-        // Fonction pour prévisualiser l'image avant upload
+        function deleteImage(messageId) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette image ?')) {
+                fetch('delete_image.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'message_id=' + messageId
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Erreur lors de la suppression de l\'image');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Erreur lors de la suppression de l\'image');
+                });
+            }
+        }
+
         function previewImage(input, previewId) {
             var preview = document.getElementById(previewId);
             
