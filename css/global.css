@@ -1,2 +1,9 @@
 @import url('footer.css');
 @import url('reset.css');
+@import url('header.css');
+@import url('home.css');
+
+*{
+    font-family: lato, sans-serif;
+    margin: 0;
+}
