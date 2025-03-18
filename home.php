@@ -29,16 +29,16 @@
     <main>
         <section class="presentation">
 
-            <div class="presentation container">
+            <div class="presentation-container">
 
-            <div>
-                <h1>Découvrez les repas disponibles à Clichy</h1>
+            <div class="presentation-text">
+                <h1>Découvrez les repas <br> disponibles à Clichy</h1>
                 <h3>Notre mission est de réduire le gaspillage alimentaire en connectant les associations avec les repas non consommés. Explorez notre plateforme pour voir les options disponibles et contribuer à cette cause importante.</h3>
-                <a href="index.php" class="btn">Explorer</a>
+                <a href="index.php" class="presentation-btn">Explorer</a>
             </div>
 
 
-            <div>
+            <div class="presentation-img">
                 <img src="public/img/homeleft.png" alt="">
             </div>
 
