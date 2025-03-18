@@ -36,9 +36,174 @@
     font-size: 0.9rem;
 }
 
-.presentation-text h3{
+.presentation-text p{
  margin-bottom: 2rem;   
- font-weight: 100;
 } 
 
-.test{}
+.function{
+    margin-top: 10rem;
+    text-align: center;
+    width: 100%;
+}
+.function-text {
+    width: 50%;
+    margin-inline: auto;
+}
+
+.function h2{
+    font-size: 3rem;
+    margin-bottom: 3rem;
+}
+
+.functionnalities{
+    width: 90%;
+    margin-inline: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    gap: 3rem;
+    margin-top: 5rem;
+}
+
+.functionnalities_box {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+}
+
+.functionnalities_box h3 {
+    font-size: 2rem;
+}
+
+.learn_more{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline: auto;
+    cursor: pointer;
+    margin-block: 5rem;
+    color: #9695CA;
+    background-color: #EFEFF7;
+    padding: 24px 12px;
+    width: 144px;
+    border: none;
+    border-radius: 50px;
+    font: 1em sans-serif;
+}
+
+.stat {
+    padding: 7rem 4rem;
+    display: flex;
+    gap: 5rem;
+    background-color: lightgray;
+
+}
+.stat_title {
+    font-size: 2rem;
+}
+.stat h4{
+    font-size: 1.25rem;
+}
+.width_50{
+    width: 50%;
+}
+
+.stat_box{
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+}
+
+.meal_stat {
+    display: flex;
+    gap: 1.5rem;
+}
+.meal_stat h3{
+    font-size: 3rem;
+}
+
+.meal_stat p {
+    width: 80%;
+}
+
+.meal_stat_box {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+
+.work{
+    margin-top: 10rem;
+    text-align: center;
+    width: 100%;
+}
+.work-text {
+    width: 50%;
+    margin-inline: auto;
+}
+
+.work h2{
+    font-size: 3rem;
+    margin-bottom: 3rem;
+}
+
+.functionnalities{
+    width: 90%;
+    margin-inline: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    gap: 3rem;
+    margin-top: 5rem;
+}
+
+.functionnalities_box {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+}
+
+.functionnalities_box h3 {
+    font-size: 2rem;
+}
+
+.informed{
+    padding: 7rem 4rem ;
+}
+.informed-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.informed-container h2{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.informed-input {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.informed-input input{
+    width: 513px;
+    height: 43px;
+    border: 1px solid black;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.register {
+    color: white;
+    background-color: black;
+    width: 111px;
+    height: 43px;
+}
