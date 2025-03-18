@@ -1,1 +1,44 @@
 @import url('header.css');
+
+.presentation{
+    height: 100vh;
+    display: flex; 
+}
+
+.presentation-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+}
+
+.presentation-text{
+    width: 60%;
+    margin: 3rem;
+}
+
+.presentation-text h1{
+    font-size: 3rem;
+    color: #1B1919;
+    margin-bottom: 1rem;
+}
+
+.presentation-btn{
+    background-color: #5A58AB;
+    padding: 0.5rem 1rem;
+    color: white;
+    border: none;
+    text-decoration: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.presentation-text h3{
+ margin-bottom: 2rem;   
+ font-weight: 100;
+} 
+
+.test{}
