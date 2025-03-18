@@ -50,7 +50,7 @@ try {
     $titre = !empty($messageInfo['titre']) ? $messageInfo['titre'] : $messageInfo['content'];
     
     // Envoi d'email via Brevo API
-    $apiKey = getenv('BREVO_API_KEY') ?: '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';
+    $apiKey = getenv('BREVO_API_KEY') ?: '';
     
     $emailData = [
         "sender" => ["name" => "Clichy Anti-Gaspi", "email" => "antigaspi@clichy.fr"],
