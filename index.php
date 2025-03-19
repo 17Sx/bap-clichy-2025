@@ -36,7 +36,6 @@ $isnotAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 0;
 <div class="container">
    <nav class="nav-header">
     <a href="annonces.php" class="filter-btn">Filtrer par tags</a>
-    <a href="logout.php" class="logout-btn">Déconnexion</a>
     <?php if ($isSuperAdmin): ?>
         <a href="superadmin.php" class="admin-btn">Gestion des comptes</a> 
         <a href="superadminanonce.php" class="admin-btn">Gestion des annonces</a>
