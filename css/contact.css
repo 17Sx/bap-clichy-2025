@@ -76,3 +76,42 @@
 .email{
     text-decoration: none;
 }
+
+/*Media Queries*/
+
+@media screen and (max-width: 768px){
+    .contact-top{
+        height: 50vh;
+    }
+
+    .contact-top h1{
+        font-size: 2rem;
+    }
+
+    .contact-top p{
+        font-size: 0.8rem;
+    }
+
+    .btn-contact{
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+@media screen and (max-width: 480px){
+    .contact-top{
+        height: 50vh;
+    }
+
+    .contact-top h1{
+        font-size: 1.5rem;
+    }
+
+    .contact-top p{
+        font-size: 0.7rem;
+    }
+
+    .btn-contact{
+        padding: 0.5rem 1rem;
+        font-size: 0.7rem;
+    }
+}
