@@ -1,0 +1,94 @@
+.admin-form-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 5rem;
+}
+
+.message-form{
+    width: 90%;
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--light-gray);
+    border-radius: 10px;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+    width: 70vw;
+    background-color: white;
+    padding: 2rem;
+}
+
+.form-group label{
+    color: var(--blue);
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.form-group input,.form-group textarea,.form-group select{
+    padding: 1rem;
+    font-size: 1rem;
+    border: none;
+    width: 100%;
+}
+
+.form-group select[multiple] {
+    height: auto;
+    min-height: 200px;
+    font-size: 1.2rem;
+    padding: 0.8rem;
+}
+
+.form-group select[multiple] option {
+    padding: 0.8rem;
+    margin: 0.3rem;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.form-group select[multiple] option:hover {
+    background-color: var(--light-gray);
+    color: var(--blue);
+}
+
+.map-container{
+    width: 100%;
+}
+
+.btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+
+button[type="submit"]{
+    background-color: var(--blue);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+    margin-top: 3rem;
+}
+
+button[type="submit"]:hover{
+    background-color: var(--white);
+    color: var(--blue);
+    border: 2px solid var(--blue);
+}
+
+.back-btn{
+    position: absolute;
+    top: 10rem;
+    left: 2rem;
+}

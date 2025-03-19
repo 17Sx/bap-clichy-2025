@@ -8,6 +8,13 @@ $isAdmin = (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) || (isset($_SE
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
+
+// Définir les coordonnées des différents lieux
+$locations = [
+    'Lycée de Paris' => ['lat' => 48.8566, 'lng' => 2.3522],
+    'Lycée de Boulogne' => ['lat' => 48.8333, 'lng' => 2.25],
+    'Primaire de Garches' => ['lat' => 48.8461, 'lng' => 2.1882]
+];
 ?>
 
 <!DOCTYPE html>
@@ -16,12 +23,31 @@ if (!isset($_SESSION['csrf_token'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter une annonce anti-gaspi</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/global.css">
+    <style>
+        #map {
+            height: 300px;
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .map-container {
+            margin-top: 10px;
+        }
+    </style>
 </head>
+
+<?php include 'templates/header.php'; ?>
+
 <body>
     <?php if ($isAdmin): ?>
+
+<a class="back-btn" href="index.php">Retour</a>
+
+
+<div class="admin-form-container">
     <div class="message-form">
-        <h2>Créer une nouvelle annonce anti gaspi!</h2>
         <form action="create.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
             
@@ -51,15 +77,6 @@ if (!isset($_SESSION['csrf_token'])) {
             </div>
             
             <div class="form-group">
-                <label for="lieu">Lieu de collecte:</label>
-                <select name="lieu" id="lieu" required>
-                    <option value="Lycée de Paris">Lycée de Paris</option>
-                    <option value="Lycée de Boulogne">Lycée de Boulogne</option>
-                    <option value="Primaire de Garches">Primaire de Garches</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
                 <label for="date_peremption">Date de péremption:</label>
                 <input type="date" name="date_peremption" id="date_peremption" required>
             </div>
@@ -67,18 +84,12 @@ if (!isset($_SESSION['csrf_token'])) {
             <div class="form-group">
                 <label for="tags">Tags (sélectionnez plusieurs options avec Ctrl+clic ou Cmd+clic):</label>
                 <select name="tags[]" id="tags" multiple class="form-control">
-                    <option value="légumes">Légumes</option>
-                    <option value="fruits">Fruits</option>
-                    <option value="viande">Viande</option>
-                    <option value="poisson">Poisson</option>
-                    <option value="produits laitiers">Produits laitiers</option>
-                    <option value="bio">Bio</option>
-                    <option value="gratuit">Gratuit</option>
-                    <option value="à petit prix">À petit prix</option>
-                    <option value="fait maison">Fait maison</option>
-                    <option value="végétarien">Végétarien</option>
-                    <option value="vegan">Vegan</option>
-                    <option value="sans gluten">Sans gluten</option>
+                    <option value="Pescetarien">🐟 Pescetarien</option>
+                    <option value="Vegan">🌱 Vegan</option>
+                    <option value="Sans Gluten">🌾 Sans Gluten</option>
+                    <option value="Avec viande">🥩 Avec viande</option>
+                    <option value="Végétarien">🥗 Végétarien</option>
+                    <option value="Desserts">🍰 Desserts</option>
                 </select>
             </div>
             
@@ -86,12 +97,77 @@ if (!isset($_SESSION['csrf_token'])) {
                 <label for="image">Image:</label>
                 <input type="file" name="image" id="image" accept="image/*">
             </div>
+
+            <div class="form-group">
+                <label for="lieu">Lieu de collecte:</label>
+                <select name="lieu" id="lieu" required>
+                    <option value="">Sélectionnez un lieu</option>
+                    <option value="Lycée de Paris">Lycée de Paris</option>
+                    <option value="Lycée de Boulogne">Lycée de Boulogne</option>
+                    <option value="Primaire de Garches">Primaire de Garches</option>
+                </select>
+            </div>
             
-            <button type="submit">Envoyer l'annonce</button>
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+
+            <div class="btn-container">
+                <button type="submit">Envoyer l'annonce</button>
+            </div>
         </form>
     </div>
+</div>
+
+<script>
+    const locations = <?php echo json_encode($locations); ?>;
+    let map;
+    let marker;
+
+    function initMap() {
+        const defaultLocation = { lat: 46.603354, lng: 1.888334 };
+        map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 12,
+            center: defaultLocation,
+        });
+        
+        marker = new google.maps.Marker({
+            position: defaultLocation,
+            map: map,
+            visible: false
+        });
+        
+        document.getElementById('lieu').addEventListener('change', function() {
+            const selectedLocation = this.value;
+            
+            if (selectedLocation && locations[selectedLocation]) {
+                document.getElementById('map').style.display = 'block';
+                
+                const position = { 
+                    lat: locations[selectedLocation].lat, 
+                    lng: locations[selectedLocation].lng 
+                };
+                
+                map.setCenter(position);
+                
+                marker.setPosition(position);
+                marker.setVisible(true);
+            } else {
+                document.getElementById('map').style.display = 'none';
+                marker.setVisible(false);
+            }
+        });
+    }
+</script>
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA02Ue7Ko7uf2bu_SWtoQY08WMZ2ZXJM4E&callback=initMap">
+</script>
+
     <?php else: ?>
         <p>Vous devez être administrateur pour accéder à cette page.</p>
     <?php endif; ?>
+
+    <?php include 'templates/footer.php'; ?>
 </body>
 </html>

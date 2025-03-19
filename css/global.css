@@ -5,6 +5,9 @@
 @import url('home.css');
 @import url('contact.css');
 @import url('index.css');
+@import url('addfood.css');
+
+
 *{
     font-family: lato, sans-serif;
     margin: 0;

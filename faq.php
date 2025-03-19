@@ -79,6 +79,9 @@
     <div class="horizontal_bar"></div>
     
 </main>
+
+<?php include 'templates/footer.php'; ?>
+
     <script src="js/faq.js"></script>
 </body>
 </html>
