@@ -1,7 +1,9 @@
 @import url('footer.css');
+@import url('var.css');
 @import url('reset.css');
 @import url('header.css');
 @import url('home.css');
+@import url('contact.css');
 
 *{
     font-family: lato, sans-serif;
