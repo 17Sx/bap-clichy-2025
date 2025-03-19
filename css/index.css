@@ -1,0 +1,105 @@
+/*Admin message*/
+
+.message-admin{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 5rem 0;
+}
+
+.admin-text{
+    background-color: var(--light-gray);
+    width: 80%;
+    padding: 10px 20px;
+    border-radius: 10px;
+    padding: 5rem;
+}
+
+.admin-text h2{
+    font-size: 2rem;
+    color: var(--blue);
+    text-align: center;
+}
+
+.admin-feature {
+    margin: 2rem 0;
+}
+
+.admin-feature strong {
+    font-size: 1.2rem;
+    color: var(--dark-blue);
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.admin-feature ul {
+    margin: 1rem 0 1rem 2rem;
+}
+
+.admin-feature li {
+    margin: 0.5rem 0;
+    line-height: 1.4;
+    margin-left: 2rem;
+}
+
+.p-bottom{
+    margin-top: 2rem;
+}
+
+.add-food-btn{
+    background-color: var(--blue);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 2rem;
+    transition: background-color 0.3s ease;
+    margin-top: 3rem;
+}
+
+/*Client message*/
+
+.message-client {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 5rem 0;
+}
+
+.client-text {
+    background-color: var(--light-gray);
+    width: 80%;
+    padding: 5rem;
+    border-radius: 10px;
+}
+
+.client-text h2 {
+    font-size: 2rem;
+    color: var(--blue);
+    text-align: center;
+}
+
+.client-feature {
+    margin: 2rem 0;
+}
+
+.client-feature strong {
+    font-size: 1.2rem;
+    color: var(--dark-blue);
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.client-feature ul {
+    margin: 1rem 0 1rem 2rem;
+}
+
+.client-feature li {
+    margin: 0.5rem 0;
+    line-height: 1.4;
+    margin-left: 2rem;
+}

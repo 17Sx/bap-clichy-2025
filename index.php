@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clichy | AntiGaspi</title>
     <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
 
@@ -24,7 +25,13 @@ $pseudo = $_SESSION['pseudo'];
 $userId = $_SESSION['user_id'];
 $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
 $isSuperAdmin = isset($_SESSION['is_superadmin']) && $_SESSION['is_superadmin'] == 1;
+$isnotAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 0;
 ?>
+
+<?php include 'templates/header.php'; ?>
+
+<?php include 'templates/adminmessage.php'; ?>
+<?php include 'templates/clientmessage.php'; ?>
 
 <div class="container">
    <nav class="nav-header">
@@ -38,79 +45,6 @@ $isSuperAdmin = isset($_SESSION['is_superadmin']) && $_SESSION['is_superadmin'] 
     </nav>
 
     
-    <?php if ($isAdmin): ?>
-    <div class="message-form">
-        <h2>Créer une nouvelle annonce anti gaspi!</h2>
-        <form action="create.php" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-            
-            <div class="form-group">
-                <label for="titre">Titre de l'annonce:</label>
-                <input type="text" name="titre" id="titre" placeholder="Titre de votre annonce" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="content">Description:</label>
-                <textarea name="content" id="content" placeholder="Écrivez votre annonce ici, <?php echo htmlspecialchars($pseudo); ?>" required></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="ingredients">Ingrédients:</label>
-                <textarea name="ingredients" id="ingredients" placeholder="Listez les ingrédients, un par ligne"></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="quantite">Quantité:</label>
-                <input type="text" name="quantite" id="quantite" placeholder="Ex: 500g, 2 portions, etc.">
-            </div>
-            
-            <div class="form-group">
-                <label for="nom_adresse">Nom et adresse:</label>
-                <input type="text" name="nom_adresse" id="nom_adresse" placeholder="Votre nom et adresse">
-            </div>
-            
-            <div class="form-group">
-                <label for="lieu">Lieu de collecte:</label>
-                <select name="lieu" id="lieu" required>
-                    <option value="Lycée de Paris">Lycée de Paris</option>
-                    <option value="Lycée de Boulogne">Lycée de Boulogne</option>
-                    <option value="Primaire de Garches">Primaire de Garches</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="date_peremption">Date de péremption:</label>
-                <input type="date" name="date_peremption" id="date_peremption" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="tags">Tags (sélectionnez plusieurs options avec Ctrl+clic ou Cmd+clic):</label>
-                <select name="tags[]" id="tags" multiple class="form-control">
-                    <option value="légumes">Légumes</option>
-                    <option value="fruits">Fruits</option>
-                    <option value="viande">Viande</option>
-                    <option value="poisson">Poisson</option>
-                    <option value="produits laitiers">Produits laitiers</option>
-                    <option value="bio">Bio</option>
-                    <option value="gratuit">Gratuit</option>
-                    <option value="à petit prix">À petit prix</option>
-                    <option value="fait maison">Fait maison</option>
-                    <option value="végétarien">Végétarien</option>
-                    <option value="vegan">Vegan</option>
-                    <option value="sans gluten">Sans gluten</option>
-                </select>
-            </div>
-
-            
-            <div class="form-group">
-                <label for="image">Image:</label>
-                <input type="file" name="image" id="image" accept="image/*">
-            </div>
-            
-            <button type="submit">Envoyer l'annonce</button>
-        </form>
-    </div>
-<?php endif; ?>
 
     <div class="messages-section">
         <h2>Annonces les plus récentes</h2>
@@ -201,7 +135,7 @@ $isSuperAdmin = isset($_SESSION['is_superadmin']) && $_SESSION['is_superadmin'] 
                 echo '</div>'; 
                 
                 if (!$row['is_claim']) {
-                    echo '<a href="claim.php?id=' . $row['message_id'] . '" class="claim-link">Réclamer l\'annonce</a>';
+                    echo '<a href="claim.php?id=' . $row['message_id'] . '" class="claim-link">Commander</a>';
                 } else {
                     echo '<p class="claimed-message">Cette annonce a déjà été réclamée!</p>';
                 }
@@ -224,46 +158,6 @@ $isSuperAdmin = isset($_SESSION['is_superadmin']) && $_SESSION['is_superadmin'] 
     </div>
 </div>
 
-
-<footer>
-
-    <div class="footer-left">
-            <img src="public/img/logoblanc.png" alt="Logo de la Ville de Clichy">
-        <div class="footer-content">
-            <div class="footer-text">
-                <p>Mairie de Clichy-la-Garenne</p>
-                <p>80, Boulevard Jean Jaurès</p>
-                <p>92110 Clichy</p>
-                <p>01 47 15 30 00</p>            
-            </div>
-
-            <div class="footer-link">
-                <a href="">Ecrire au maire</a>
-                <a href="">Mon Compte</a>
-                <a href="">Horraires et plans d'accès</a>
-            </div>
-    </div>
-    </div>
-    
-
-    <div class="footer-right">
-        <div class="footer-newsletter">
-            <h2>NewsLetter</h2>
-            <p>Inscrivez-vous a notre newsletter</p>
-            <p>Et recevez toutes les dernières actualités <br> de la Ville de Clichy !</p>
-            <a href="">S'abonner</a>
-        </div>
-
-        <div class="social-media">
-            <a href="https://www.facebook.com/VilledeClichy" target="_blank"><img src="public/img/facebook.png" alt="Logo facebook"></a>
-            <a href="https://www.instagram.com/villedeclichy/" target="_blank"><img src="public/img/instagram.png" alt="Logo Instagram"></a>
-            <a href="https://www.linkedin.com/company/villedeclichy/" target="_blank"><img src="public/img/linkedin.png" alt="Logo Linkedin"></a>
-            <a href="https://www.youtube.com/user/VilledeClichy" target="_blank"><img src="public/img/youtube.png" alt="Logo Youtube"></a>
-            <a href="https://twitter.com/VilledeClichy" target="_blank"><img src="public/img/twitter.png" alt="Logo Twitter"></a>
-        </div>
-    </div>
-
-</footer>
-
+<?php include 'templates/footer.php'; ?>
 </body>
 </html>
