@@ -1,6 +1,8 @@
 <header>
     <div class="logo">
-        <img src="public/img/logo.png" alt="">
+        <a href="index.php">        
+            <img src="public/img/logo.png" alt="">
+        </a>
     </div>
     
     <!-- Bouton burger pour mobile -->

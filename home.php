@@ -9,25 +9,32 @@
 <body>
 
   <?php include 'templates/header.php'; ?>
-
+  
+  <?php
+    require_once 'bdd.php';
+    
+    $stmt_total = $connexion->query("SELECT COUNT(*) as total FROM message");
+    $total = $stmt_total->fetch(PDO::FETCH_ASSOC)['total'];
+    
+    $stmt_claimed = $connexion->query("SELECT COUNT(*) as claimed FROM message WHERE is_claim = 1");
+    $claimed = $stmt_claimed->fetch(PDO::FETCH_ASSOC)['claimed'];
+    
+    $percent_claimed = ($total > 0) ? round(($claimed / $total) * 100) : 0;
+    $percent_unclaimed = 100 - $percent_claimed;
+  ?>
 
     <main>
         <section class="presentation">
-
             <div class="presentation-container">
-
             <div class="presentation-text">
                 <h1>Découvrez les repas <br> disponibles à Clichy</h1>
                 <p>Notre mission est de réduire le gaspillage alimentaire en connectant les associations avec les repas non consommés. Explorez notre plateforme pour voir les options disponibles et contribuer à cette cause importante.</p>
                 <a href="index.php" class="presentation-btn">Explorer</a>
             </div>
 
-
             <div class="presentation-img">
                 <img src="public/img/homeleft.png" alt="">
             </div>
-
-
         </section>
 
         <section class="function">
@@ -38,26 +45,23 @@
 
           <div class="functionnalities">
             <div class="functionnalities_box">
-              <img src="./public/img/PlaceholderImage.png" alt="Placeholder Image">
+              <img src="./public/img/homemidleleft.png" alt="Placeholder Image">
               <h3>Recherche de repas disponible en temps réel</h3>
               <p>Trouvez rapidement les repas qui vous conviennent.</p>
             </div>
             <div class="functionnalities_box">
-              <img src="./public/img/PlaceholderImage.png" alt="Placeholder Image">
+              <img src="./public/img/homemidlemidle.png" alt="Placeholder Image">
               <h3>Recherche de repas disponible en temps réel</h3>
               <p>Trouvez rapidement les repas qui vous conviennent.</p>
             </div>
             <div class="functionnalities_box">
-              <img src="./public/img/PlaceholderImage.png" alt="Placeholder Image">
+              <img src="./public/img/homemidleright.png" alt="Placeholder Image">
               <h3>Recherche de repas disponible en temps réel</h3>
               <p>Trouvez rapidement les repas qui vous conviennent.</p>
             </div>
           </div>
 
-          <button class="learn_more">
-            <p>En savoir plus</p>
-          </button>
-
+          <a class="learn_more" href="faq.php">En savoir plus</a>
         </section>
 
         <section class="stat">
@@ -67,12 +71,12 @@
             <h4>Découvrez combien de repas sont disponibles chaque jour. Nos statistiques aident les associations à mieux planifier leurs récupérations.</h4>
             <div class="meal_stat">
               <div class="meal_stat_box">
-                <h3>X%</h3>
+                <h3><?php echo $percent_claimed; ?>%</h3>
                 <p>Repas récupérés par les associations partenaires.</p>
               </div>
               <div class="meal_stat_box">
-                <h3>X%</h3>
-                <p>Repas récupérés par les associations partenaires.</p>
+                <h3><?php echo $percent_unclaimed; ?>%</h3>
+                <p>Repas disponibles pour les associations partenaires.</p>
               </div>
             </div>
           </div>
@@ -85,25 +89,23 @@
           </div>
           <div class="functionnalities">
             <div class="functionnalities_box">
-              <img src="./public/img/PlaceholderImage.png" alt="Placeholder Image">
+              <img src="./public/img/homebottomleft.png" alt="Placeholder Image">
               <h3>Processus de signalement des repas disponibles</h3>
               <p>Les restaurants s'inscrivent et indiquent les plats restants.</p>
             </div>
             <div class="functionnalities_box">
-              <img src="./public/img/PlaceholderImage.png" alt="Placeholder Image">
+              <img src="./public/img/homebottommidle.png" alt="Placeholder Image">
               <h3>Processus de signalement des repas disponibles</h3>
               <p>Les restaurants s'inscrivent et indiquent les plats restants.</p>
             </div>
             <div class="functionnalities_box">
-              <img src="./public/img/PlaceholderImage.png" alt="Placeholder Image">
+              <img src="./public/img/homebottomright.png" alt="Placeholder Image">
               <h3>Processus de signalement des repas disponibles</h3>
               <p>Les restaurants s'inscrivent et indiquent les plats restants.</p>
             </div>
           </div>
 
-          <button class="learn_more">
-            <p>En savoir plus</p>
-          </button>
+          <a class="learn_more" href="faq.php">En savoir plus</a>
         </section>
 
 
@@ -123,7 +125,6 @@
           </div>
         </section>
     </main>
-
 
     <?php include 'templates/footer.php'; ?>
     

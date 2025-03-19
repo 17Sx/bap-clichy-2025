@@ -1,1 +1,43 @@
-@import url('header.css');
+@import url("global.css");
+
+.faq {
+  padding: 10rem 4rem;
+}
+
+.faq_title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: var(--blue);
+}
+.questions {
+  font-size: 1.75rem;
+  margin-bottom: 5rem;
+}
+.horizontal_bar {
+  width: 70%;
+  height: 1px;
+  background-color: var(--blue);
+  margin: 2rem 0;
+}
+
+.question_title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+  margin-bottom: 2rem;
+}
+
+.questions {
+  font-size: 2rem;
+}
+
+.question_title img {
+  transition: transform 0.3s ease;
+}
+
+.question p {
+  transition: all 0.3s ease;
+}
