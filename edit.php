@@ -189,18 +189,12 @@ try {
                 if (!is_array($selectedTags)) $selectedTags = [];
                 ?>
                 <select name="tags[]" id="tags" multiple class="form-control">
-                    <option value="légumes" <?php echo in_array('légumes', $selectedTags) ? 'selected' : ''; ?>>Légumes</option>
-                    <option value="fruits" <?php echo in_array('fruits', $selectedTags) ? 'selected' : ''; ?>>Fruits</option>
-                    <option value="viande" <?php echo in_array('viande', $selectedTags) ? 'selected' : ''; ?>>Viande</option>
-                    <option value="poisson" <?php echo in_array('poisson', $selectedTags) ? 'selected' : ''; ?>>Poisson</option>
-                    <option value="produits laitiers" <?php echo in_array('produits laitiers', $selectedTags) ? 'selected' : ''; ?>>Produits laitiers</option>
-                    <option value="bio" <?php echo in_array('bio', $selectedTags) ? 'selected' : ''; ?>>Bio</option>
-                    <option value="gratuit" <?php echo in_array('gratuit', $selectedTags) ? 'selected' : ''; ?>>Gratuit</option>
-                    <option value="à petit prix" <?php echo in_array('à petit prix', $selectedTags) ? 'selected' : ''; ?>>À petit prix</option>
-                    <option value="fait maison" <?php echo in_array('fait maison', $selectedTags) ? 'selected' : ''; ?>>Fait maison</option>
-                    <option value="végétarien" <?php echo in_array('végétarien', $selectedTags) ? 'selected' : ''; ?>>Végétarien</option>
-                    <option value="vegan" <?php echo in_array('vegan', $selectedTags) ? 'selected' : ''; ?>>Vegan</option>
-                    <option value="sans gluten" <?php echo in_array('sans gluten', $selectedTags) ? 'selected' : ''; ?>>Sans gluten</option>
+                    <option value="pescetarien" <?php echo in_array('pescetarien', $selectedTags) ? 'selected' : ''; ?>>🐟 Pescetarien</option>
+                    <option value="vegan" <?php echo in_array('vegan', $selectedTags) ? 'selected' : ''; ?>>🌱 Vegan</option>
+                    <option value="végétarien" <?php echo in_array('végétarien', $selectedTags) ? 'selected' : ''; ?>>🥗 Végétarien</option>
+                    <option value="desserts" <?php echo in_array('desserts', $selectedTags) ? 'selected' : ''; ?>>🍰 Desserts</option>
+                    <option value="sans gluten" <?php echo in_array('sans gluten', $selectedTags) ? 'selected' : ''; ?>>🌾 Sans gluten</option>
+                    <option value="avec viande" <?php echo in_array('avec viande', $selectedTags) ? 'selected' : ''; ?>>🥩 Avec viande</option>
                 </select>
             </div>
             

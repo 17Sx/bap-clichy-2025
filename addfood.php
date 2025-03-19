@@ -9,7 +9,6 @@ if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// Définir les coordonnées des différents lieux
 $locations = [
     'Lycée de Paris' => ['lat' => 48.8566, 'lng' => 2.3522],
     'Lycée de Boulogne' => ['lat' => 48.8333, 'lng' => 2.25],

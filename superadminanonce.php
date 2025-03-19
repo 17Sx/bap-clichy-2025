@@ -68,15 +68,12 @@ function formatTags($tagsJson) {
     }
     
     $badgeColors = [
-        'bio' => 'success',
-        'vegan' => 'success',
-        'à petit prix' => 'info',
-        'gratuit' => 'primary',
-        'fait maison' => 'warning',
-        'sans gluten' => 'danger',
-        'viande' => 'dark',
-        'légumes' => 'success',
-        'produits laitiers' => 'info',
+        'Pescetarien' => 'success',
+        'Vegan' => 'success',
+        'Végétarien' => 'info',
+        'Desserts' => 'primary',
+        'Sans Gluten' => 'danger',
+        'Avec viande' => 'dark',
     ];
     
     $badgesHtml = '';
@@ -99,11 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $isClaim = isset($_POST['is_claim']) ? 1 : 0;
     $userId = ($isSuperAdmin) && isset($_POST['user_id']) ? $_POST['user_id'] : $currentUser;
     
-    // Gérer les tags
     $tags = isset($_POST['tags']) ? $_POST['tags'] : [];
     $tagsJson = json_encode($tags);
     
-    // Gérer l'upload d'image
     $imagePath = null;
     if (!empty($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -360,8 +355,7 @@ if (isset($_GET['error'])) {
 
 // Liste des tags disponibles
 $availableTags = [
-    'bio', 'vegan', 'à petit prix', 'gratuit', 'fait maison', 
-    'sans gluten', 'viande', 'légumes', 'produits laitiers'
+    'Pescetarien', 'Vegan', 'Végétarien', 'Desserts', 'Sans Gluten', 'Avec viande'
 ];
 ?>
 
@@ -371,7 +365,6 @@ $availableTags = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clichy | Gestion des Annonces</title>
-    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all .min.css">
     <style>

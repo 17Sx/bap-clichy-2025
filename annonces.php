@@ -119,9 +119,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $allTags = [
-        'légumes', 'fruits', 'viande', 'poisson', 'produits laitiers', 
-        'bio', 'gratuit', 'à petit prix', 'fait maison', 'végétarien', 
-        'vegan', 'sans gluten'
+        'Pescetarien', 'Vegan', 'Végétarien', 'Desserts', 'Sans Gluten', 'Avec viande'
     ];
 
     $selectedTag = isset($_GET['tag']) ? $_GET['tag'] : '';
