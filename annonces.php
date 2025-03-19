@@ -4,97 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clichy | AntiGaspi - Filtrer par tags</title>
-    <link rel="stylesheet" href="css/global.css">
-    <style>
-        .filter-section {
-            margin: 20px 0;
-            padding: 15px;
-            background: #f8f8f8;
-            border-radius: 5px;
-        }
-        
-        .filter-form {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .tag-button {
-            padding: 6px 12px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .tag-button.active {
-            background: #4CAF50;
-            color: white;
-            border-color: #4CAF50;
-        }
-        
-        .message-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        
-        .message-card {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            background: white;
-        }
-        
-        .message-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        
-        .tag-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 10px;
-        }
-        
-        .tag-pill {
-            background: #f1f1f1;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-        }
-        
-        .filter-controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .filter-control {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .filter-control select {
-            width: 100%;
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        
-        .filter-control label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="css/annonces.css">
 </head>
 <body>
 
@@ -119,10 +29,10 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $allTags = [
-        'Pescetarien', 'Vegan', 'Végétarien', 'Desserts', 'Sans Gluten', 'Avec viande'
-    ];
+        'Vegétarien', 'Végan', 'Pescetarien' , 'Sans gluten', 
+'Avec viande' ,'Désserts'  ];
 
-    $selectedTag = isset($_GET['tag']) ? $_GET['tag'] : '';
+    $selectedTags = isset($_GET['tags']) ? explode(',', $_GET['tags']) : [];
     $selectedLieu = isset($_GET['lieu']) ? $_GET['lieu'] : '';
     $sortDate = isset($_GET['sort_date']) ? $_GET['sort_date'] : '';
     
@@ -130,6 +40,10 @@ try {
     $lieux = $lieuStmt->fetchAll(PDO::FETCH_COLUMN);
     
 ?>
+
+<?php include 'templates/header.php'; ?>
+<?php include 'templates/adminmessage.php'; ?>
+<?php include 'templates/clientmessage.php'; ?>
 
 <div class="container">
     <nav class="nav-header">
@@ -170,31 +84,24 @@ try {
         </div>
         
         <div class="filter-form">
-            <a href="javascript:void(0)" onclick="selectTag('')" class="tag-button <?php echo empty($selectedTag) ? 'active' : ''; ?>">
-                Tous
+            <a href="javascript:void(0)" 
+               onclick="selectTag('all')" 
+               class="tag-button <?php echo empty($selectedTags) ? 'active' : ''; ?>">
+                <img src="public/icons/all.svg" alt="Tous">
+                <span>Tous</span>
             </a>
             <?php foreach ($allTags as $tag): ?>
-            <a href="javascript:void(0)" onclick="selectTag('<?php echo $tag; ?>')" 
-               class="tag-button <?php echo $selectedTag === $tag ? 'active' : ''; ?>">
-                <?php echo htmlspecialchars($tag); ?>
+            <a href="javascript:void(0)" 
+               onclick="selectTag('<?php echo $tag; ?>')" 
+               class="tag-button <?php echo in_array($tag, $selectedTags) ? 'active' : ''; ?>">
+                <img src="public/icons/<?php echo strtolower(str_replace(' ', '-', $tag)); ?>.svg" alt="<?php echo $tag; ?>">
+                <span><?php echo htmlspecialchars($tag); ?></span>
             </a>
             <?php endforeach; ?>
         </div>
     </div>
 
     <div class="messages-section">
-        <h2>
-            <?php 
-            $title = 'Annonces';
-            if (!empty($selectedTag)) {
-                $title .= ' avec le tag "' . htmlspecialchars($selectedTag) . '"';
-            }
-            if (!empty($selectedLieu)) {
-                $title .= ' à ' . htmlspecialchars($selectedLieu);
-            }
-            echo $title;
-            ?>
-        </h2>
         
         <div class="message-grid">
             <?php
@@ -206,9 +113,14 @@ try {
             
             $params = [];
             
-            if (!empty($selectedTag)) {
-                $sql .= " AND JSON_CONTAINS(tags, :tag, '$')";
-                $params[':tag'] = json_encode($selectedTag);
+            if (!empty($selectedTags)) {
+                $tagConditions = [];
+                foreach ($selectedTags as $index => $tag) {
+                    $paramName = ':tag' . $index;
+                    $tagConditions[] = "JSON_CONTAINS(tags, $paramName, '$')";
+                    $params[$paramName] = json_encode($tag);
+                }
+                $sql .= " AND (" . implode(' AND ', $tagConditions) . ")";
             }
             
             if (!empty($selectedLieu)) {
@@ -240,65 +152,21 @@ try {
                 echo '<div class="message-card ' . $messageClass . '">';
                 
                 // Titre de l'annonce
-                echo '<h3>' . htmlspecialchars($row['titre'] ?? 'Sans titre') . '</h3>';
+                echo '<div class="card-title"><h3>' . htmlspecialchars($row['titre'] ?? 'Sans titre') . '</h3></div>';
                 
-                // Image
-                if (!empty($row['image_path'])) {
-                    echo '<img src="' . htmlspecialchars($row['image_path']) . '" alt="image" class="message-image">';
+                // Afficher le statut (disponible/épuisé)
+                if ($isClaimed){
+                    echo '<div class="status-container">';
+                }else {
+                    echo '<div class="status-container-available">';
                 }
-                
-                // Méta-informations
-                echo '<p class="message-meta">' . htmlspecialchars($row['pseudo']) . ' - ' . htmlspecialchars($row['creea']) . '</p>';
-                
-                // Contenu
-                echo '<p class="message-content">' . htmlspecialchars($row['content']) . '</p>';
-                
-                // Informations supplémentaires
-                if (!empty($row['ingredients'])) {
-                    echo '<p><strong>Ingrédients:</strong> ' . nl2br(htmlspecialchars($row['ingredients'])) . '</p>';
-                }
-                
-                if (!empty($row['quantite'])) {
-                    echo '<p><strong>Quantité:</strong> ' . htmlspecialchars($row['quantite']) . '</p>';
-                }
-                
-                if (!empty($row['nom_adresse'])) {
-                    echo '<p><strong>Contact:</strong> ' . htmlspecialchars($row['nom_adresse']) . '</p>';
-                }
-                
-                // Afficher le lieu de collecte
-                if (!empty($row['lieu'])) {
-                    echo '<p><strong>Lieu de collecte:</strong> ' . htmlspecialchars($row['lieu']) . '</p>';
-                }
-                
-                // Afficher la date de péremption
-                if (!empty($row['date_peremption'])) {
-                    echo '<p><strong>Date de péremption:</strong> ' . htmlspecialchars($row['date_peremption']) . '</p>';
-                }
-                
-                // Afficher les tags
-                if (!empty($tags)) {
-                    echo '<div class="tag-list">';
-                    foreach ($tags as $tag) {
-                        echo '<span class="tag-pill">' . htmlspecialchars($tag) . '</span>';
-                    }
-                    echo '</div>';
-                }
-                
-                // Bouton pour réclamer
-                if (!$isClaimed) {
-                    echo '<a href="claim.php?id=' . $row['message_id'] . '" class="claim-link">Réclamer l\'annonce</a>';
+                if ($isClaimed) {
+                    echo '<span class="status-text status-unavailable">Épuisé</span>';
                 } else {
-                    echo '<p class="claimed-message">Cette annonce a déjà été réclamée!</p>';
+                    echo '<span class="status-text status-available">Disponible</span>';
                 }
+                echo '</div>';
                 
-                // Contrôles d'administration
-                if ($isAdmin) {
-                    echo '<div class="admin-controls">';
-                    echo '<a href="edit.php?id=' . $row['message_id'] . '" class="edit-link">Modifier</a>';
-                    echo '<a href="delete.php?id=' . $row['message_id'] . '" class="delete-link">Supprimer</a>';
-                    echo '</div>';
-                }
                 
                 echo '</div>';
             }
@@ -313,58 +181,95 @@ try {
 </div>
 
 <script>
-    function applyFilters() {
-        const tag = '<?php echo $selectedTag; ?>';
-        const lieu = document.getElementById('lieu').value;
-        const sortDate = document.getElementById('sort_date').value;
-        
-        let url = 'annonces.php?';
-        
-        if (tag) {
-            url += 'tag=' + encodeURIComponent(tag) + '&';
+let selectedTags = <?php echo json_encode($selectedTags); ?>;
+
+function selectTag(tag) {
+    if (tag === 'all') {
+        selectedTags = [];
+        // Mettre à jour les classes des boutons
+        document.querySelectorAll('.tag-button').forEach(button => {
+            button.classList.remove('active');
+        });
+        document.querySelector('.tag-button[onclick="selectTag(\'all\')"]').classList.add('active');
+    } else {
+        const index = selectedTags.indexOf(tag);
+        if (index === -1) {
+            selectedTags.push(tag);
+        } else {
+            selectedTags.splice(index, 1);
         }
         
-        if (lieu) {
-            url += 'lieu=' + encodeURIComponent(lieu) + '&';
-        }
+        // Mettre à jour les classes des boutons
+        document.querySelectorAll('.tag-button').forEach(button => {
+            if (button.getAttribute('onclick').includes(tag)) {
+                button.classList.toggle('active');
+            }
+        });
         
-        if (sortDate) {
-            url += 'sort_date=' + encodeURIComponent(sortDate);
+        // Gérer le bouton "Tous"
+        const allButton = document.querySelector('.tag-button[onclick="selectTag(\'all\')"]');
+        if (selectedTags.length === 0) {
+            allButton.classList.add('active');
+        } else {
+            allButton.classList.remove('active');
         }
-        
-        // Supprimer le dernier & si nécessaire
-        if (url.endsWith('&')) {
-            url = url.slice(0, -1);
-        }
-        
-        window.location.href = url;
+    }
+
+    applyFilters();
+}
+
+function applyFilters() {
+    const lieu = document.getElementById('lieu').value;
+    const sortDate = document.getElementById('sort_date').value;
+    
+    let params = new URLSearchParams();
+    
+    if (selectedTags.length > 0) {
+        params.set('tags', selectedTags.join(','));
     }
     
-    function selectTag(tag) {
-        const lieu = document.getElementById('lieu').value;
-        const sortDate = document.getElementById('sort_date').value;
-        
-        let url = 'annonces.php?';
-        
-        if (tag) {
-            url += 'tag=' + encodeURIComponent(tag) + '&';
-        }
-        
-        if (lieu) {
-            url += 'lieu=' + encodeURIComponent(lieu) + '&';
-        }
-        
-        if (sortDate) {
-            url += 'sort_date=' + encodeURIComponent(sortDate);
-        }
-        
-        // Supprimer le dernier & si nécessaire
-        if (url.endsWith('&')) {
-            url = url.slice(0, -1);
-        }
-        
-        window.location.href = url;
+    if (lieu) {
+        params.set('lieu', lieu);
     }
+    
+    if (sortDate) {
+        params.set('sort_date', sortDate);
+    }
+    
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.pushState({}, '', newUrl);
+    
+    fetch(newUrl)
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            
+            // Mettre à jour la grille des messages
+            document.querySelector('.message-grid').innerHTML = 
+                doc.querySelector('.message-grid').innerHTML;
+            
+            // Mettre à jour le titre
+            document.querySelector('.messages-section h2').innerHTML = 
+                doc.querySelector('.messages-section h2').innerHTML;
+            
+            // Mettre à jour les classes des boutons de tags
+            const newButtons = doc.querySelectorAll('.tag-button');
+            const currentButtons = document.querySelectorAll('.tag-button');
+            
+            newButtons.forEach((newButton, index) => {
+                if (newButton.classList.contains('active')) {
+                    currentButtons[index].classList.add('active');
+                } else {
+                    currentButtons[index].classList.remove('active');
+                }
+            });
+        });
+}
+
+window.addEventListener('popstate', () => {
+    location.reload();
+});
 </script>
 
 <?php
@@ -373,25 +278,7 @@ try {
 }
 ?>
 
-<footer>
-    <div class="footer-left">
-        <img src="public/img/logoblanc.png" alt="">
-        <div class="footer-text">
-            <p>Les restes d'aujourd'hui,</p>
-            <p>les repas de demains</p>
-        </div>
-    </div>
-
-    <div class="footer-contact">
-        <h3>Contact</h3>
-        <div class="footer-contact-text">
-            <p>Mairie de Clichy-la-Garenne 80,</p>
-            <p>Boulevard Jean Jaurès </p>
-            <p>92110 Clichy </p>
-            <p>01 47 15 30 00</p>
-        </div>
-    </div>
-</footer>
+<?php include 'templates/footer.php'; ?>
 
 </body>
 </html>

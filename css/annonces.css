@@ -1,0 +1,130 @@
+@import url("global.css");
+
+.filter-section {
+  margin: 20px 0 0 0;
+  padding: 15px;
+  background: #f8f8f8;
+  border-radius: 5px;
+}
+
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 15px;
+  justify-content: center;
+}
+
+.tag-button {
+  width: 135px;
+  height: 101px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: #efeff7;
+  color: #5a58ab;
+  text-decoration: none;
+}
+
+.tag-button img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
+}
+
+.tag-button.active {
+  background-color: #5a58ab;
+  color: white;
+}
+
+.message-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 60%;
+  margin-inline: auto;
+  gap: 80px;
+}
+
+.messages-section {
+    background-color: #f8f8f8;
+}
+.card-title{
+    height: 94px;
+    width: 231px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.message-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: white;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 231px;
+}
+
+.filter-controls {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-control {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-control select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.filter-control label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.status-container {
+  width: 231px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #efeff7;
+}
+
+.status-container-available {
+  width: 231px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #5a58ab;
+}
+
+.status-text {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.status-available {
+  color: white;
+}
+
+.status-unavailable {
+  color: #5a58ab;
+}
