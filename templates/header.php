@@ -13,8 +13,8 @@
     <div class="link">
         <nav>
             <ul>
-                <li><a class="link-btn-f" href="">Plats</a></li>
-                <li><a class="link-btn-f" href="">Contact</a></li>
+                <li><a class="link-btn-f" href="../index.php">Plats</a></li>
+                <li><a class="link-btn-f" href="../contact.php">Contact</a></li>
                 <div class="connexion">
                     <li><a href="login.php" class="link-btn">Se connecter </a><img src="public/icon/connexion.svg" alt="Icon de connexion"></li>
                 </div>
