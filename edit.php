@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_id']) || empty($_SESSION['admin']) || $_SESSION['admin'] != 1) {
-    header("Location: index.php");
+// Vérification que l'utilisateur est connecté
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
     exit();
 }
 
@@ -14,6 +15,36 @@ try {
     $pdo = new PDO($dsn, $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
+    // Vérification que l'ID de l'annonce est fourni
+    if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+        header("Location: index.php");
+        exit();
+    }
+    
+    $message_id = $_GET['id'];
+    
+    // Récupération de l'annonce et de son auteur
+    $stmt = $pdo->prepare("
+        SELECT *
+        FROM message
+        WHERE id = :id
+    ");
+    $stmt->execute([':id' => $message_id]);
+    $message = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$message) {
+        header("Location: index.php");
+        exit();
+    }
+    
+    // Vérifier si l'utilisateur est l'auteur de l'annonce
+    if ($message['user_id'] != $_SESSION['user_id']) {
+        // Rediriger vers la page d'accueil si l'utilisateur n'est pas l'auteur
+        header("Location: index.php");
+        exit();
+    }
+    
+    // Traitement du formulaire de modification
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($_POST['id'])) {
             $message_id = $_POST['id'];
@@ -23,6 +54,8 @@ try {
             $ingredients = $_POST['ingredients'] ?? '';
             $quantite = $_POST['quantite'] ?? '';
             $nom_adresse = $_POST['nom_adresse'] ?? '';
+            $lieu = $_POST['lieu'] ?? '';
+            $date_peremption = $_POST['date_peremption'] ?? '';
             
             $tags = isset($_POST['tags']) ? json_encode($_POST['tags']) : '';
             
@@ -53,14 +86,16 @@ try {
                     content = :content, 
                     ingredients = :ingredients, 
                     quantite = :quantite, 
-                    nom_adresse = :nom_adresse, 
+                    nom_adresse = :nom_adresse,
+                    lieu = :lieu,
+                    date_peremption = :date_peremption,
                     tags = :tags";
             
             if ($image_path) {
                 $sql .= ", image_path = :image_path";
             }
             
-            $sql .= " WHERE id = :id";
+            $sql .= " WHERE id = :id AND user_id = :user_id";
             
             $stmt = $pdo->prepare($sql);
             
@@ -70,8 +105,11 @@ try {
                 ':ingredients' => $ingredients,
                 ':quantite' => $quantite,
                 ':nom_adresse' => $nom_adresse,
+                ':lieu' => $lieu,
+                ':date_peremption' => $date_peremption,
                 ':tags' => $tags,
-                ':id' => $message_id
+                ':id' => $message_id,
+                ':user_id' => $_SESSION['user_id']
             ];
             
             if ($image_path) {
@@ -83,26 +121,6 @@ try {
             header("Location: index.php");
             exit();
         }
-    }
-    
-    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-        $message_id = $_GET['id'];
-        
-        $stmt = $pdo->prepare("
-            SELECT *
-            FROM message
-            WHERE id = :id
-        ");
-        $stmt->execute([':id' => $message_id]);
-        $message = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        if (!$message) {
-            header("Location: index.php");
-            exit();
-        }
-    } else {
-        header("Location: index.php");
-        exit();
     }
 } catch (PDOException $e) {
     echo 'Erreur : ' . $e->getMessage();
@@ -148,6 +166,20 @@ try {
             <div class="form-group">
                 <label for="nom_adresse">Nom et adresse:</label>
                 <input type="text" name="nom_adresse" id="nom_adresse" value="<?php echo htmlspecialchars($message['nom_adresse'] ?? ''); ?>" placeholder="Votre nom et adresse">
+            </div>
+            
+            <div class="form-group">
+                <label for="lieu">Lieu de collecte:</label>
+                <select name="lieu" id="lieu" required>
+                    <option value="Lycée de Paris" <?php echo ($message['lieu'] ?? '') == 'Lycée de Paris' ? 'selected' : ''; ?>>Lycée de Paris</option>
+                    <option value="Lycée de Boulogne" <?php echo ($message['lieu'] ?? '') == 'Lycée de Boulogne' ? 'selected' : ''; ?>>Lycée de Boulogne</option>
+                    <option value="Primaire de Garches" <?php echo ($message['lieu'] ?? '') == 'Primaire de Garches' ? 'selected' : ''; ?>>Primaire de Garches</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="date_peremption">Date de péremption:</label>
+                <input type="date" name="date_peremption" id="date_peremption" value="<?php echo htmlspecialchars($message['date_peremption'] ?? ''); ?>" required>
             </div>
             
             <div class="form-group">
