@@ -29,6 +29,7 @@
     </div>
     </header>
 
+    
     <!-- main  -->
 
 <section class="contact">
@@ -38,7 +39,7 @@
             <h1>Contactez-nous</h1>
             <p> 
                 Nous vous invitons à consulter notre FAQ, où vous trouverez peut-être la réponse à votre question avant de nous contacter. <br>
-                Pour toute autre demande, vous pouvez nous écrire à l’adresse suivante : <span class="email">bapclichy@gmail.com</span>  <br>
+                Pour toute autre demande, vous pouvez nous écrire à l'adresse suivante : <a href="mailto:bapclichy@gmail.com" class="email">bapclichy@gmail.com</a> <br>
                 Nous nous engageons à étudier votre demande dans un délai d’une semaine.
             </p>
             <a class="btn-contact" href="faq.php">Consulter la FAQ</a>
