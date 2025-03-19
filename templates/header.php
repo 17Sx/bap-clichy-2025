@@ -1,6 +1,6 @@
 <header>
     <div class="logo">
-        <a href="index.php">        
+        <a href="home.php">        
             <img src="public/img/logo.png" alt="">
         </a>
     </div>
@@ -20,7 +20,7 @@
                 <div class="connexion">
                     <?php 
                     if(isset($_SESSION['user_id']) && isset($_SESSION['pseudo'])) {
-                        echo '<li class="link-btn">Bonjour, ' . htmlspecialchars($_SESSION['pseudo']) . '</li>';
+                        echo '<li><a href="logout.php" class="link-btn">Déconnexion</a></li>';
                     } else {
                         echo '<li><a href="login.php" class="link-btn">Se connecter </a><img src="public/icon/connexion.svg" alt="Icon de connexion"></li>';
                     }
