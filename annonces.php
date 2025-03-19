@@ -118,19 +118,16 @@ try {
     $pdo = new PDO($dsn, $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Définition de tous les tags disponibles
     $allTags = [
         'légumes', 'fruits', 'viande', 'poisson', 'produits laitiers', 
         'bio', 'gratuit', 'à petit prix', 'fait maison', 'végétarien', 
         'vegan', 'sans gluten'
     ];
 
-    // Récupérer les filtres sélectionnés
     $selectedTag = isset($_GET['tag']) ? $_GET['tag'] : '';
     $selectedLieu = isset($_GET['lieu']) ? $_GET['lieu'] : '';
     $sortDate = isset($_GET['sort_date']) ? $_GET['sort_date'] : '';
     
-    // Récupérer tous les lieux disponibles
     $lieuStmt = $pdo->query("SELECT DISTINCT lieu FROM message WHERE lieu IS NOT NULL ORDER BY lieu");
     $lieux = $lieuStmt->fetchAll(PDO::FETCH_COLUMN);
     
@@ -174,7 +171,6 @@ try {
             </div>
         </div>
         
-        <!-- Filtres par tags -->
         <div class="filter-form">
             <a href="javascript:void(0)" onclick="selectTag('')" class="tag-button <?php echo empty($selectedTag) ? 'active' : ''; ?>">
                 Tous
