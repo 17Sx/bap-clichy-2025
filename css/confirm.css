@@ -1,0 +1,47 @@
+.confirm-container{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem;
+}
+
+.order-summary{
+    height: auto;
+    padding: 5rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-detail{
+    background-color: white;
+    width: 80%;
+    padding: 3rem;
+    margin: 1rem;
+}
+
+.order-detail strong{
+    font-size: 1.5rem;
+    color: var(--blue);
+}
+
+.tag-item{
+    display: flex;
+    background-color: var(--light-gray);
+    align-items: center;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    border-radius: 50px;
+    max-width: 15rem;
+}
+
+.tag-icon{
+    margin-left: rem;
+    color: #9695CA;
+
+}

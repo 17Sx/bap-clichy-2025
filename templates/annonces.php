@@ -22,13 +22,7 @@ try {
 ?>
 
 <div class="container">
-    <nav class="nav-header">
-        <a href="index.php" class="home-btn">Accueil</a>
-        <a href="logout.php" class="logout-btn">Déconnexion</a>
-    </nav>
-
     <div class="filter-section">
-        <h2>Filtrer les annonces</h2>
         
         <div class="filter-controls">
             <div class="filter-control">
@@ -62,7 +56,6 @@ try {
             <a href="javascript:void(0)" 
                onclick="selectTag('all')" 
                class="tag-button <?php echo empty($selectedTags) ? 'active' : ''; ?>">
-            <img src="public/icon/all.png" alt="Tous">
             <span>Tous</span>
             </a>
             <?php foreach ($allTags as $tag): ?>
@@ -126,10 +119,8 @@ try {
                 
                 echo '<div class="message-card ' . $messageClass . '">';
                 
-                // Titre de l'annonce
                 echo '<div class="card-title"><h3>' . htmlspecialchars($row['titre'] ?? 'Sans titre') . '</h3></div>';
                 
-                // Afficher le statut (disponible/épuisé)
                 if ($isClaimed){
                     echo '<div class="status-container">';
                 }else {
@@ -138,7 +129,7 @@ try {
                 if ($isClaimed) {
                     echo '<span class="status-text status-unavailable">Épuisé</span>';
                 } else {
-                    echo '<span class="status-text status-available">Disponible</span>';
+                    echo '<a href="confirm.php?id=' . $row['message_id'] . '" class="status-text status-available">Disponible</a>';
                 }
                 echo '</div>';
                 

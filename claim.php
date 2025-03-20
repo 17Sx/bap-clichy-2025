@@ -6,12 +6,15 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+if (isset($_POST['id']) && is_numeric($_POST['id'])) {
+    $messageId = $_POST['id'];
+} elseif (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $messageId = $_GET['id'];
+} else {
     header('Location: index.php');
     exit();
 }
 
-$messageId = $_GET['id'];
 $dsn = 'mysql:host=localhost;dbname=renduphpcrud;charset=utf8';
 $username = 'root';
 $password = '';
@@ -215,4 +218,3 @@ try {
     </script>
 </body>
 </html>
-

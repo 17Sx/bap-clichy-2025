@@ -29,22 +29,16 @@ $isnotAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 0;
 ?>
 
 <?php include 'templates/header.php'; ?>
+<?php if ($isSuperAdmin): ?>
+        <a href="superadmin.php" class="admin-btn">Gestion des comptes</a> 
+        <a href="superadminanonce.php" class="admin-btn">Gestion des annonces</a>
+        <a href="resetclaim.php" class="admin-btn">Reset des claims</a>
+    <?php endif; ?>
 
 <?php include 'templates/adminmessage.php'; ?>
 <?php include 'templates/clientmessage.php'; ?>
 
 <div class="container">
-   <nav class="nav-header">
-    <a href="annonces.php" class="filter-btn">Filtrer par tags</a>
-    <?php if ($isSuperAdmin): ?>
-        <a href="superadmin.php" class="admin-btn">Gestion des comptes</a> 
-        <a href="superadminanonce.php" class="admin-btn">Gestion des annonces</a>
-        <a href="resetclaim.php" class="admin-btn">Reset des claims</a>
-    <?php endif; ?>
-    </nav>
-
-    
-
     <div class="messages-section">
         <?php include 'templates/annonces.php'; ?>
     </div>
