@@ -73,7 +73,6 @@ try {
         
         <div class="message-grid">
             <?php
-            // Construire la requête SQL en fonction des filtres sélectionnés
             $sql = "SELECT user.pseudo, message.*, message.id AS message_id, message.user_id
                     FROM message
                     JOIN user ON message.user_id = user.id
@@ -96,7 +95,6 @@ try {
                 $params[':lieu'] = $selectedLieu;
             }
             
-            // Ordre de tri
             if (!empty($sortDate)) {
                 $sql .= " ORDER BY date_peremption " . ($sortDate === 'asc' ? 'ASC' : 'DESC');
             } else {
@@ -114,7 +112,6 @@ try {
                 $isClaimed = $row['is_claim'] == 1;
                 $messageClass = $isClaimed ? 'claimed' : '';
                 
-                // Convertir les tags JSON en tableau PHP
                 $tags = json_decode($row['tags'], true) ?? [];
                 
                 echo '<div class="message-card ' . $messageClass . '">';
@@ -152,7 +149,6 @@ let selectedTags = <?php echo json_encode($selectedTags); ?>;
 function selectTag(tag) {
     if (tag === 'all') {
         selectedTags = [];
-        // Mettre à jour les classes des boutons
         document.querySelectorAll('.tag-button').forEach(button => {
             button.classList.remove('active');
         });
@@ -165,14 +161,12 @@ function selectTag(tag) {
             selectedTags.splice(index, 1);
         }
         
-        // Mettre à jour les classes des boutons
         document.querySelectorAll('.tag-button').forEach(button => {
             if (button.getAttribute('onclick').includes(tag)) {
                 button.classList.toggle('active');
             }
         });
         
-        // Gérer le bouton "Tous"
         const allButton = document.querySelector('.tag-button[onclick="selectTag(\'all\')"]');
         if (selectedTags.length === 0) {
             allButton.classList.add('active');
@@ -210,16 +204,12 @@ function applyFilters() {
         .then(html => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
-            
-            // Mettre à jour la grille des messages
             document.querySelector('.message-grid').innerHTML = 
                 doc.querySelector('.message-grid').innerHTML;
             
-            // Mettre à jour le titre
             document.querySelector('.messages-section h2').innerHTML = 
                 doc.querySelector('.messages-section h2').innerHTML;
             
-            // Mettre à jour les classes des boutons de tags
             const newButtons = doc.querySelectorAll('.tag-button');
             const currentButtons = document.querySelectorAll('.tag-button');
             
