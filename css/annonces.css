@@ -128,3 +128,7 @@
 .status-unavailable {
   color: #5a58ab;
 }
+
+.tag-button.active img {
+  filter: brightness(0) invert(1); 
+}

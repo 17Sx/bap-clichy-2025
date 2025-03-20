@@ -34,11 +34,32 @@ header{
 }
 
 
-.link-btn-f{
+.link-btn-f {
     margin: 0 15px;
     text-decoration: none;
     color: #1B1919;
     height: 100%;
+    position: relative;
+}
+
+.link-btn-f::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #5A58AB;
+    transition: width 0.3s ease;
+}
+
+.link-btn-f:hover {
+    color: #5A58AB;
+    transition: all 0.3s ease;
+}
+
+.link-btn-f:hover::after {
+    width: 100%;
 }
 
 .connexion{ 

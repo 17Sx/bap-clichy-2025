@@ -1,24 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clichy | AntiGaspi - Filtrer par tags</title>
-    <link rel="stylesheet" href="css/annonces.css">
-</head>
-<body>
-
 <?php
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
-
-$pseudo = $_SESSION['pseudo'];
-$userId = $_SESSION['user_id'];
-$isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] == 1;
 
 $dsn = 'mysql:host=localhost;dbname=renduphpcrud;charset=utf8';
 $username = 'root';
@@ -41,10 +21,6 @@ try {
     
 ?>
 
-<?php include 'templates/header.php'; ?>
-<?php include 'templates/adminmessage.php'; ?>
-<?php include 'templates/clientmessage.php'; ?>
-
 <div class="container">
     <nav class="nav-header">
         <a href="index.php" class="home-btn">Accueil</a>
@@ -54,7 +30,6 @@ try {
     <div class="filter-section">
         <h2>Filtrer les annonces</h2>
         
-        <!-- Filtres supplémentaires: lieu et date de péremption -->
         <div class="filter-controls">
             <div class="filter-control">
                 <label for="lieu">Filtrer par lieu:</label>
@@ -87,14 +62,14 @@ try {
             <a href="javascript:void(0)" 
                onclick="selectTag('all')" 
                class="tag-button <?php echo empty($selectedTags) ? 'active' : ''; ?>">
-                <img src="public/icons/all.svg" alt="Tous">
-                <span>Tous</span>
+            <img src="public/icon/all.png" alt="Tous">
+            <span>Tous</span>
             </a>
             <?php foreach ($allTags as $tag): ?>
             <a href="javascript:void(0)" 
                onclick="selectTag('<?php echo $tag; ?>')" 
                class="tag-button <?php echo in_array($tag, $selectedTags) ? 'active' : ''; ?>">
-                <img src="public/icons/<?php echo strtolower(str_replace(' ', '-', $tag)); ?>.svg" alt="<?php echo $tag; ?>">
+                <img src="public/icon/<?php echo strtolower(str_replace(' ', '-', $tag)); ?>.png" 
                 <span><?php echo htmlspecialchars($tag); ?></span>
             </a>
             <?php endforeach; ?>
@@ -277,8 +252,6 @@ window.addEventListener('popstate', () => {
     echo 'Erreur : ' . $e->getMessage();
 }
 ?>
-
-<?php include 'templates/footer.php'; ?>
 
 </body>
 </html>
