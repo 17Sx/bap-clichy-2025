@@ -39,7 +39,9 @@
 
     <div class="container">
         <div class="messages-section">
-            <?php include 'templates/annonces.php'; ?>
+            <?php
+            include 'templates/annonces.php';
+            ?>
         </div>
         <?php if ($isAdmin): ?>
             <div class="add-food-container">
@@ -68,7 +70,7 @@
         }
 
         .add-food-btn:hover {
-            background-color:rgb(255, 255, 255);
+            background-color: rgb(255, 255, 255);
             border: 2px solid var(--blue);
             color: var(--blue);
         }
