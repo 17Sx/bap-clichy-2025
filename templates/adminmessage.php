@@ -60,6 +60,13 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             z-index: 1000;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-popup-btn i {
+            font-size: 18px;
         }
 
         .admin-popup-btn:hover {
@@ -79,6 +86,7 @@
             overflow-y: auto;
             opacity: 0;
             transition: opacity 0.3s ease;
+            padding: 20px;
         }
 
         .admin-popup.show {
@@ -89,8 +97,8 @@
             position: relative;
             background-color: #fefefe;
             margin: 5% auto;
-            padding: 20px;
-            width: 80%;
+            padding: 30px;
+            width: 90%;
             max-width: 800px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -106,28 +114,26 @@
             transform: translateY(0);
         }
 
-        .close-popup {
-            position: absolute;
-            right: 20px;
-            top: 10px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #666;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .close-popup:hover {
-            color: #000;
-        }
-
         .admin-text {
             margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .admin-text h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         .admin-feature {
-            margin: 15px 0;
+            margin: 20px 0;
             line-height: 1.6;
+        }
+
+        .admin-feature strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
         }
 
         .admin-feature ul {
@@ -136,25 +142,26 @@
         }
 
         .admin-feature li {
-            margin: 5px 0;
+            margin: 8px 0;
+            position: relative;
+            padding-left: 20px;
         }
 
-        @media (max-width: 768px) {
-            .admin-popup-content {
-                width: 95%;
-                margin: 10% auto;
-            }
+        .admin-feature li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
         }
 
         .popup-buttons {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 20px;
-            padding-top: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
             border-top: 1px solid #eee;
-            width: 80%;
-            justify-content: space-between;
+            width: 100%;
         }
 
         .hide-message-label {
@@ -169,17 +176,19 @@
         .hide-message-label input[type="checkbox"] {
             width: 16px;
             height: 16px;
+            cursor: pointer;
         }
 
         .close-popup-btn {
             background-color: var(--blue);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            min-width: 120px;
         }
 
         .close-popup-btn:hover {
@@ -189,10 +198,65 @@
         }
 
         @media (max-width: 768px) {
+            .admin-popup {
+                padding: 10px;
+            }
+
+            .admin-popup-content {
+                width: 100%;
+                margin: 10% auto;
+                padding: 20px;
+            }
+
+            .admin-text h2 {
+                font-size: 20px;
+            }
+
+            .admin-feature strong {
+                font-size: 16px;
+            }
+
+            .admin-feature {
+                margin: 15px 0;
+            }
+
             .popup-buttons {
                 flex-direction: column;
                 gap: 15px;
                 align-items: center;
+                text-align: center;
+            }
+
+            .close-popup-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .admin-popup-btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .admin-text h2 {
+                font-size: 18px;
+            }
+
+            .admin-feature strong {
+                font-size: 15px;
+            }
+
+            .admin-feature ul {
+                margin-left: 15px;
+            }
+
+            .admin-feature li {
+                font-size: 14px;
+            }
+
+            .hide-message-label {
+                font-size: 13px;
             }
         }
     </style>
@@ -220,12 +284,10 @@
                 }, 300);
             }
 
-            // Gérer le changement de la case à cocher
             hideCheckbox.addEventListener('change', function() {
                 localStorage.setItem('hideAdminMessage', this.checked);
             });
 
-            // Ouvrir automatiquement la popup au chargement si le message n'est pas masqué
             if (localStorage.getItem('hideAdminMessage') !== 'true') {
                 showPopup();
             }
