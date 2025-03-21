@@ -41,3 +41,19 @@
 .question p {
   transition: all 0.3s ease;
 }
+
+
+@media screen and (max-width: 1000px) {
+  .faq {
+    padding: 5rem 2rem;
+  }
+  .faq_title {
+    font-size: 2.5rem;
+  }
+  .question_title{
+    width: 100%;
+  }
+  .horizontal_bar {
+    width: 100%;
+  }
+}
