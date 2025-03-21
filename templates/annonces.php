@@ -26,46 +26,6 @@ try {
 
 ?>
 
-    <style>
-        .message-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .btn-edit,
-        .btn-delete {
-            padding: 5px 10px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.9em;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .btn-edit {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-        }
-
-        .btn-delete {
-            background-color: #f44336;
-            color: white;
-            border: none;
-        }
-
-        .btn-edit:hover {
-            background-color: #45a049;
-        }
-
-        .btn-delete:hover {
-            background-color: #da190b;
-        }
-    </style>
-
     <div class="container">
         <div class="filter-section">
 

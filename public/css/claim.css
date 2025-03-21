@@ -1,0 +1,171 @@
+/* Styles pour les messages réclamés */
+.message-card.claimed {
+    opacity: 0.7;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+}
+
+/* Container pour le statut */
+.status-container,
+.status-container-available {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Style pour le statut "Épuisé" */
+.status-container {
+    background-color: #ffebee;
+    border: 1px solid #ffcdd2;
+}
+
+.status-text.status-unavailable {
+    color: #d32f2f;
+}
+
+/* Style pour le statut "Disponible" */
+.status-container-available {
+    background-color: #e8f5e9;
+    border: 1px solid #c8e6c9;
+}
+
+.status-text.status-available {
+    color: #2e7d32;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.status-text.status-available:hover {
+    color: #1b5e20;
+    text-decoration: underline;
+}
+
+/* Animation pour le changement de statut */
+.message-card {
+    transition: all 0.3s ease;
+}
+
+/* Style pour le bouton de confirmation */
+.confirm-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-button:hover {
+    background-color: #45a049;
+}
+
+/* Style pour le message de confirmation */
+.confirmation-message {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+    border: 1px solid #c8e6c9;
+}
+
+/* Style pour le formulaire de confirmation */
+.confirmation-form {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-form h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.confirmation-form .form-group {
+    margin-bottom: 15px;
+}
+
+.confirmation-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.confirmation-form input,
+.confirmation-form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.confirmation-form textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* Style pour les boutons d'action */
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.action-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.action-buttons .confirm-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.action-buttons .cancel-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.action-buttons button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Style pour les messages d'erreur */
+.error-message {
+    background-color: #ffebee;
+    color: #d32f2f;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    border: 1px solid #ffcdd2;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .confirmation-form {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .action-buttons button {
+        width: 100%;
+    }
+} 

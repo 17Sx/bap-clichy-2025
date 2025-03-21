@@ -13,7 +13,7 @@ Notre mission est de créer un pont entre les établissements scolaires et les a
 Ce projet a été développé par :
 
 - **17Sx** - Développeur
-- **Yohzenn** - Développeur 
+- **Yohzenn** - Développeur
 
 ## 🛠️ Technologies utilisées
 
@@ -75,7 +75,6 @@ git clone https://github.com/votre-username/bap-clichy-2025.git
   - GD
   - JSON
 
-
 ## 📱 Interface utilisateur
 
 - Design responsive
@@ -83,8 +82,6 @@ git clone https://github.com/votre-username/bap-clichy-2025.git
 - Filtres de recherche avancés
 - Système de tags pour les catégories alimentaires
 - Interface d'administration complète
-
-
 
 <div align="center">
   <p>Développé avec ❤️ pour la réduction du gaspillage alimentaire</p>
