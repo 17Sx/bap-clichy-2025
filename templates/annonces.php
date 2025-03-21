@@ -9,12 +9,12 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $allTags = [
-        'Vegétarien',
-        'Végan',
         'Pescetarien',
-        'Sans gluten',
+        'Vegan',
+        'Sans Gluten',
         'Avec viande',
-        'Désserts'
+        'Végétarien',
+        'Desserts'
     ];
 
     $selectedTags = isset($_GET['tags']) ? explode(',', $_GET['tags']) : [];
@@ -107,8 +107,8 @@ try {
                     <a href="javascript:void(0)"
                         onclick="selectTag('<?php echo $tag; ?>')"
                         class="tag-button <?php echo in_array($tag, $selectedTags) ? 'active' : ''; ?>">
-                        <img src="public/icon/<?php echo strtolower(str_replace(' ', '-', $tag)); ?>.png"
-                            <span><?php echo htmlspecialchars($tag); ?></span>
+                        <img src="public/icon/<?php echo strtolower(str_replace(' ', '-', $tag)); ?>.png" alt="<?php echo htmlspecialchars($tag); ?>">
+                        <span><?php echo htmlspecialchars($tag); ?></span>
                     </a>
                 <?php endforeach; ?>
             </div>

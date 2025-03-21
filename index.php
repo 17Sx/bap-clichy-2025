@@ -32,9 +32,10 @@
 
     <?php include 'templates/header.php'; ?>
     <?php if ($isSuperAdmin): ?>
-        <a href="superadmin.php" class="admin-btn">Gestion des comptes</a>
-        <a href="superadminanonce.php" class="admin-btn">Gestion des annonces</a>
-        <a href="resetclaim.php" class="admin-btn">Reset des claims</a>
+        <div class="admin-buttons">
+            <a href="superadmin.php" class="admin-btn">Gestion des comptes</a>
+            <a href="superadminanonce.php" class="admin-btn">Gestion des annonces</a>
+        </div>
     <?php endif; ?>
 
     <div class="container">
@@ -52,29 +53,6 @@
 
     <?php include 'templates/adminmessage.php'; ?>
     <?php include 'templates/clientmessage.php'; ?>
-
-    <style>
-        .add-food-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .add-food-btn {
-            display: inline-block;
-            background-color: var(--blue);
-            color: white;
-            padding: 6px 10px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .add-food-btn:hover {
-            background-color: rgb(255, 255, 255);
-            border: 2px solid var(--blue);
-            color: var(--blue);
-        }
-    </style>
 
     <?php include 'templates/footer.php'; ?>
 </body>

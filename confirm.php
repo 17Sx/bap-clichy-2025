@@ -69,6 +69,7 @@ try {
             display: flex;
             gap: 10px;
             margin-top: 20px;
+            width: 70%;
         }
 
         .btn-edit,
@@ -84,6 +85,7 @@ try {
             align-items: center;
             gap: 5px;
             border: none;
+            min-width: 5rem;
         }
 
         .btn-edit {
