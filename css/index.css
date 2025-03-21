@@ -10,8 +10,7 @@
 }
 
 .admin-text{
-    background-color: var(--light-gray);
-    width: 80%;
+    width: 95%;
     padding: 10px 20px;
     border-radius: 10px;
     padding: 5rem;
@@ -71,8 +70,7 @@
 }
 
 .client-text {
-    background-color: var(--light-gray);
-    width: 80%;
+    width: 95%;
     padding: 5rem;
     border-radius: 10px;
 }
