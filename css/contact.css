@@ -67,8 +67,8 @@
 }
 
 .contact-bottom a{
-    margin-left: 2rem !important;
-}
+    margin-left: 2rem;
+}   
 
 
 /*Email style*/
@@ -115,3 +115,19 @@
         font-size: 0.7rem;
     }
 }
+
+
+@media screen and (max-width: 1000px){
+
+    .contact-top-text{
+        margin-left: 0;
+        text-align: center;
+        padding: 0 1rem;
+    }    
+    .contact-bottom{
+        text-align: center;
+    }
+    .contact-bottom a{
+            margin-left: 0; 
+        }
+    }

@@ -10,10 +10,8 @@
 </head>
 
 <body>
-
-  <?php include 'templates/header.php'; ?>
-
   <?php
+  session_start();
   require_once 'bdd.php';
 
   $stmt_total = $connexion->query("SELECT COUNT(*) as total FROM message");
@@ -25,6 +23,8 @@
   $percent_claimed = ($total > 0) ? round(($claimed / $total) * 100) : 0;
   $percent_unclaimed = 100 - $percent_claimed;
   ?>
+
+  <?php include 'templates/header.php'; ?>
 
   <main>
     <section class="presentation">

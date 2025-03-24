@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="css/faq.css">
 </head>
 <body>
-    
 <?php include 'templates/header.php'; ?>
 
 <main class="faq">
