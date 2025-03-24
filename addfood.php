@@ -12,9 +12,31 @@ if (!isset($_SESSION['csrf_token'])) {
 }
 
 $locations = [
-    'Lycée de Paris' => ['lat' => 48.8566, 'lng' => 2.3522],
-    'Lycée de Boulogne' => ['lat' => 48.8333, 'lng' => 2.25],
-    'Primaire de Garches' => ['lat' => 48.8461, 'lng' => 2.1882]
+    // Écoles élémentaires
+    'École élémentaire publique Jean Jaurès' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École élémentaire publique Jules Ferry A' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École élémentaire publique Jules Ferry B' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École élémentaire publique Léopold Sédar Senghor' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École élémentaire publique Louis Aragon' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École élémentaire publique Louis Pasteur A' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École élémentaire publique Louis Pasteur B' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École élémentaire publique Toussaint Louverture' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École élémentaire publique Victor Hugo A' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École élémentaire publique Victor Hugo B' => ['lat' => 48.9022, 'lng' => 2.3094],
+
+    // Écoles maternelles
+    'École maternelle publique du Landy' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École maternelle publique Georges Boisseau' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École maternelle publique Jacques Prévert' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École maternelle publique Jean Jaurès' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École maternelle publique Jules Ferry' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École maternelle publique Louis Pasteur' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École maternelle publique Marin Fournier' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École maternelle publique Pierre Mendès-France' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École maternelle publique Sophie Foucault' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École maternelle publique Victor Hugo' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École maternelle publique Annie Fratellini' => ['lat' => 48.9022, 'lng' => 2.3094],
+    'École maternelle publique Condorcet' => ['lat' => 48.9022, 'lng' => 2.3094]
 ];
 
 $apiKey = GOOGLE_MAPS_API_KEY;
@@ -97,10 +119,35 @@ $apiKey = GOOGLE_MAPS_API_KEY;
                     <div class="form-group">
                         <label for="lieu">Lieu de collecte:</label>
                         <select name="lieu" id="lieu" required>
-                            <option value="">Sélectionnez un lieu</option>
-                            <option value="Lycée de Paris">Lycée de Paris</option>
-                            <option value="Lycée de Boulogne">Lycée de Boulogne</option>
-                            <option value="Primaire de Garches">Primaire de Garches</option>
+                            <option value="">Sélectionnez une école</option>
+
+                            <optgroup label="Écoles élémentaires">
+                                <option value="École élémentaire publique Jean Jaurès">École élémentaire publique Jean Jaurès</option>
+                                <option value="École élémentaire publique Jules Ferry A">École élémentaire publique Jules Ferry A</option>
+                                <option value="École élémentaire publique Jules Ferry B">École élémentaire publique Jules Ferry B</option>
+                                <option value="École élémentaire publique Léopold Sédar Senghor">École élémentaire publique Léopold Sédar Senghor</option>
+                                <option value="École élémentaire publique Louis Aragon">École élémentaire publique Louis Aragon</option>
+                                <option value="École élémentaire publique Louis Pasteur A">École élémentaire publique Louis Pasteur A</option>
+                                <option value="École élémentaire publique Louis Pasteur B">École élémentaire publique Louis Pasteur B</option>
+                                <option value="École élémentaire publique Toussaint Louverture">École élémentaire publique Toussaint Louverture</option>
+                                <option value="École élémentaire publique Victor Hugo A">École élémentaire publique Victor Hugo A</option>
+                                <option value="École élémentaire publique Victor Hugo B">École élémentaire publique Victor Hugo B</option>
+                            </optgroup>
+
+                            <optgroup label="Écoles maternelles">
+                                <option value="École maternelle publique du Landy">École maternelle publique du Landy</option>
+                                <option value="École maternelle publique Georges Boisseau">École maternelle publique Georges Boisseau</option>
+                                <option value="École maternelle publique Jacques Prévert">École maternelle publique Jacques Prévert</option>
+                                <option value="École maternelle publique Jean Jaurès">École maternelle publique Jean Jaurès</option>
+                                <option value="École maternelle publique Jules Ferry">École maternelle publique Jules Ferry</option>
+                                <option value="École maternelle publique Louis Pasteur">École maternelle publique Louis Pasteur</option>
+                                <option value="École maternelle publique Marin Fournier">École maternelle publique Marin Fournier</option>
+                                <option value="École maternelle publique Pierre Mendès-France">École maternelle publique Pierre Mendès-France</option>
+                                <option value="École maternelle publique Sophie Foucault">École maternelle publique Sophie Foucault</option>
+                                <option value="École maternelle publique Victor Hugo">École maternelle publique Victor Hugo</option>
+                                <option value="École maternelle publique Annie Fratellini">École maternelle publique Annie Fratellini</option>
+                                <option value="École maternelle publique Condorcet">École maternelle publique Condorcet</option>
+                            </optgroup>
                         </select>
                     </div>
 
@@ -121,17 +168,26 @@ $apiKey = GOOGLE_MAPS_API_KEY;
             let marker;
 
             function initMap() {
-                const defaultLocation = {
-                    lat: 46.603354,
-                    lng: 1.888334
+                // Centrer la carte sur Clichy
+                const clichyLocation = {
+                    lat: 48.9022,
+                    lng: 2.3094
                 };
+
                 map = new google.maps.Map(document.getElementById("map"), {
-                    zoom: 12,
-                    center: defaultLocation,
+                    zoom: 14,
+                    center: clichyLocation,
+                    styles: [{
+                        "featureType": "poi.school",
+                        "elementType": "labels",
+                        "stylers": [{
+                            "visibility": "on"
+                        }]
+                    }]
                 });
 
                 marker = new google.maps.Marker({
-                    position: defaultLocation,
+                    position: clichyLocation,
                     map: map,
                     visible: false
                 });
@@ -148,9 +204,17 @@ $apiKey = GOOGLE_MAPS_API_KEY;
                         };
 
                         map.setCenter(position);
+                        map.setZoom(16);
 
                         marker.setPosition(position);
                         marker.setVisible(true);
+
+                        // Ajouter une info window avec le nom de l'école
+                        const infoWindow = new google.maps.InfoWindow({
+                            content: selectedLocation
+                        });
+
+                        infoWindow.open(map, marker);
                     } else {
                         document.getElementById('map').style.display = 'none';
                         marker.setVisible(false);
