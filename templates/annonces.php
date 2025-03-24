@@ -129,7 +129,7 @@ try {
                         echo '<div class="status-container-available">';
                     }
                     if ($isClaimed) {
-                        echo '<span class="status-text status-unavailable">Épuisé</span>';
+                        echo '<a href="confirm.php?id=' . $row['message_id'] . ' "class="status-text status-unavailable">Épuisé</a>';
                     } else {
                         echo '<a href="confirm.php?id=' . $row['message_id'] . '" class="status-text status-available">Disponible</a>';
                     }
