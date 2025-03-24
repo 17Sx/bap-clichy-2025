@@ -1,0 +1,7 @@
+# Fichiers de configuration sensibles
+config/config.php
+
+# Autres fichiers à ignorer
+.DS_Store
+.env
+*.log 
