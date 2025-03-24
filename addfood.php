@@ -169,7 +169,7 @@ $apiKey = GOOGLE_MAPS_API_KEY;
         </script>
 
         <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_MAPS_API_KEY; ?>&callback=initMap">
         </script>
 
     <?php else: ?>
