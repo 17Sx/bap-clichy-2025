@@ -61,10 +61,6 @@ $apiKey = GOOGLE_MAPS_API_KEY;
                         <input type="text" name="titre" id="titre" placeholder="Titre de votre annonce" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="content">Description:</label>
-                        <textarea name="content" id="content" placeholder="Écrivez votre annonce ici, <?php echo htmlspecialchars($pseudo); ?>" required></textarea>
-                    </div>
 
                     <div class="form-group">
                         <label for="ingredients">Ingrédients:</label>
@@ -96,11 +92,6 @@ $apiKey = GOOGLE_MAPS_API_KEY;
                             <option value="Végétarien">🥗 Végétarien</option>
                             <option value="Desserts">🍰 Desserts</option>
                         </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="image">Image:</label>
-                        <input type="file" name="image" id="image" accept="image/*">
                     </div>
 
                     <div class="form-group">
