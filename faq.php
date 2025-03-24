@@ -7,22 +7,8 @@
     <link rel="stylesheet" href="css/faq.css">
 </head>
 <body>
-    <header>
-  <div class="logo">
-    <img src="public/img/logo.png" alt="">
-  </div>
-  <div class="link">
-    <nav>
-      <ul>
-        <li><a class="link-btn-f" href="">Plats</a></li>
-        <li><a class="link-btn-f" href="">Contact</a></li>
-        <div class="connexion">
-            <li><a href="login.php" class="link-btn">Se connecter </a><img src="public/icon/connexion.svg" alt="Icon de connexion"></li>
-        </div>
-      </ul>
-    </nav>
-  </div>
-</header>
+    
+<?php include 'templates/header.php'; ?>
 
 <main class="faq">
     <h1 class="faq_title">Trouvez les réponses à vos questions ici</h1>
