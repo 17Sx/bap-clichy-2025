@@ -20,6 +20,33 @@ Ce projet a été développé par :
 - **Backend** : PHP natif
 - **Base de données** : MySQL
 - **Frontend** : HTML5, CSS3, JavaScript
+- **APIs** : Google Maps
+
+## 🔑 Configuration des clés API
+
+### Google Maps API
+
+1. **Obtenir une clé API** :
+
+   - Allez sur [Google Cloud Console](https://console.cloud.google.com/)
+   - Créez un compte si vous n'en avez pas
+   - Créez un nouveau projet ou sélectionnez un projet existant
+   - Dans le menu, allez dans "APIs & Services" > "Credentials"
+   - Cliquez sur "Create Credentials" > "API key"
+   - Votre clé API sera générée
+
+2. **Sécuriser votre clé API** :
+
+   - Dans Google Cloud Console, allez dans "APIs & Services" > "Credentials"
+   - Cliquez sur votre clé API
+   - Dans "Application restrictions", choisissez "HTTP referrers"
+   - Ajoutez votre domaine (ex: `*.votredomaine.com/*`)
+   - Dans "API restrictions", sélectionnez "Maps JavaScript API"
+
+3. **Configurer le projet** :
+   - Copiez le fichier `config/config.example.php` vers `config/config.php`
+   - Remplacez `VOTRE_CLE_API_ICI` par votre clé API Google Maps
+   - Assurez-vous que le fichier `config.php` est bien ignoré par Git (vérifiez `.gitignore`)
 
 ## 🌟 Fonctionnalités principales
 
