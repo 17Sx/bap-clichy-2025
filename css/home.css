@@ -10,14 +10,14 @@
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     overflow: hidden;
 }
 
 .presentation-text{
-    width: 60%;
-    margin: 3rem;
+    width: 80%;
+    margin-left: 3rem;
 }
 
 .presentation-text h1{
@@ -243,13 +243,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4rem 2rem;
     background-color: #f8f9fa;
     min-height: 80vh;
 }
 
 .presentation-container {
-    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -258,10 +256,7 @@
     width: 100%;
 }
 
-.presentation-text {
-    flex: 1;
-    max-width: 600px;
-}
+
 
 .presentation-text h1 {
     font-size: 3rem;
@@ -278,8 +273,8 @@
 }
 
 .presentation-img {
-    flex: 1;
-    max-width: 500px;
+    height: 100%;
+    width: 100%;
 }
 
 .presentation-img img {
