@@ -11,27 +11,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    if (!empty($_POST['content'])) {
-        $content = $_POST['content'];
+    // Utiliser le titre comme contenu si aucun contenu n'est fourni
+    $content = !empty($_POST['content']) ? $_POST['content'] : $_POST['titre'];
+
+    if (!empty($content)) {
         $titre = isset($_POST['titre']) ? $_POST['titre'] : null;
         $ingredients = isset($_POST['ingredients']) ? $_POST['ingredients'] : null;
         $quantite = isset($_POST['quantite']) ? $_POST['quantite'] : null;
         $nom_adresse = isset($_POST['nom_adresse']) ? $_POST['nom_adresse'] : null;
         $lieu = isset($_POST['lieu']) ? $_POST['lieu'] : null;
         $date_peremption = isset($_POST['date_peremption']) ? $_POST['date_peremption'] : null;
-        
+
         // Traitement des tags depuis le select multiple
         $tags_array = [];
         if (isset($_POST['tags']) && is_array($_POST['tags'])) {
             $tags_array = $_POST['tags'];
         }
         $tags_json = json_encode($tags_array);
-        
+
         $image_path = null;
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $upload_dir = 'uploads/'; 
-            
+            $upload_dir = 'uploads/';
+
             if (!file_exists($upload_dir)) {
                 mkdir($upload_dir, 0777, true);
             }
@@ -80,4 +82,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-?>
