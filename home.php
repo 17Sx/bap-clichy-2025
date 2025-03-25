@@ -54,13 +54,13 @@
         </div>
         <div class="functionnalities_box">
           <img src="./public/img/homemidlemidle.png" alt="Placeholder Image">
-          <h3>Recherche de repas disponible en temps réel</h3>
-          <p>Trouvez rapidement les repas qui vous conviennent.</p>
+          <h3>Associations : Notifications personnalisées pour ne rien manquer</h3>
+          <p>Recevez des alertes sur les repas disponibles.</p>
         </div>
         <div class="functionnalities_box">
           <img src="./public/img/homemidleright.png" alt="Placeholder Image">
-          <h3>Recherche de repas disponible en temps réel</h3>
-          <p>Trouvez rapidement les repas qui vous conviennent.</p>
+          <h3>Cantines : Partagez vos repas avec les associations locales</h3>
+          <p>Contribuez à réduire le gaspillage alimentaire au sein de votre cantine.</p>
         </div>
       </div>
 
