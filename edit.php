@@ -89,15 +89,27 @@ try {
                     nom_adresse = :nom_adresse,
                     lieu = :lieu,
                     date_peremption = :date_peremption,
-                    tags = :tags";
+                    tags = :tags
+                    WHERE id = :id AND user_id = :user_id";
 
             if ($image_path) {
-                $sql .= ", image_path = :image_path";
+                $sql = "UPDATE message SET 
+                        titre = :titre, 
+                        content = :content, 
+                        ingredients = :ingredients, 
+                        quantite = :quantite, 
+                        nom_adresse = :nom_adresse,
+                        lieu = :lieu,
+                        date_peremption = :date_peremption,
+                        tags = :tags,
+                        image_path = :image_path
+                        WHERE id = :id AND user_id = :user_id";
             }
 
-            $sql .= " WHERE id = :id AND user_id = :user_id";
-
             $stmt = $pdo->prepare($sql);
+
+            // Limiter le contenu à 255 caractères pour correspondre à la structure de la BDD
+            $content = substr($content, 0, 255);
 
             $params = [
                 ':titre' => $titre,
@@ -116,10 +128,16 @@ try {
                 $params[':image_path'] = $image_path;
             }
 
-            $stmt->execute($params);
-
-            header("Location: index.php");
-            exit();
+            try {
+                if ($stmt->execute($params)) {
+                    header("Location: index.php");
+                    exit();
+                } else {
+                    $error = "Erreur lors de la mise à jour";
+                }
+            } catch (PDOException $e) {
+                $error = "Erreur SQL : " . $e->getMessage();
+            }
         }
     }
 } catch (PDOException $e) {
@@ -181,7 +199,7 @@ try {
         input[type="date"]:focus,
         textarea:focus,
         select:focus {
-            border-color:var(--blue);
+            border-color: var(--blue);
             outline: none;
         }
 
