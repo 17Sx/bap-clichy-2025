@@ -45,7 +45,7 @@
             </div>
             <button type="submit">Confirmer</button>
         </form>
-        <p>Veuillez demander un accès à un admin pour vous créer un compte, <br>a l'adresse mail suivante : example@mail.fr</p>
+        <p>Veuillez demander un accès à un admin pour vous créer un compte, <br>a l'adresse mail suivante : bapclichy@gmail.com</p>
     </div>
 
     <script>
